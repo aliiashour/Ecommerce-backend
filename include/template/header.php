@@ -27,7 +27,7 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="row">
-                            <div class="col-sm-9">
+                            <div class="col-sm-6">
                                 <?php if(isset($_SESSION["user"])){ ?>
                                     <ul class="list-unstyled list float-left">
                                         <li class="list-item"><a href="profile.php">My Profile</a></li>
@@ -37,12 +37,13 @@
                                 <?php } ?>
 
                             </div>  
-                            <div class="col-sm-3 pan">
+                            <div class="col-sm-6 pan">
                                 <?php 
 
                                     if(isset($_SESSION["user"])){
 
-                                        echo '<img src="layout/images/b.jpg" alt="me" class="mine rounded-circle imr-fluid img-thumbnail">' . '<span>'. $_SESSION["user"] .'</span>' ; 
+                                        echo '<img src="layout/images/b.jpg" alt="me" class="mine rounded-circle imr-fluid img-thumbnail">' . '<span>'. $_SESSION["user"] . '</span>' ; 
+                                        
                                     
                                     }else{
                                         
@@ -50,7 +51,10 @@
                                     
                                     }
 
+                                    
+
                                 ?>
+                                | <a href="admin">dashboard</a>
                             </div>
                         
   
