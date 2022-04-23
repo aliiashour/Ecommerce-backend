@@ -54,6 +54,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && strlen($_POST["user"]) > 0 && strlen(
     </div>
     
     <button class="btn btn-primary float-right"><?php echo lang('LOGIN') ?></button>
+    <button class="btn btn-primary float-left"><a href="/ECO/" style="color:#FFF;text-decoration:#FFF" ><?php echo lang('BACK') ?></a></button>
     <p class="lead" id="response"></p>
 </form>
 
