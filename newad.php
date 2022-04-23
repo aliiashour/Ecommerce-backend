@@ -74,7 +74,7 @@ if(isset($_SESSION["user"])){
 
             $stmt = $con->prepare("INSERT INTO 
                                             items(item_name, item_desc, price, country, status, add_date, cat_id, member_id, item_tags, image) 
-                                   VALUES(:zx, :zxx, :zxxx, :zxxxx, :zxxxxx, now(), :zxxxxxx, :zxxxxxxx, :zxxxxxxxx, :zxxxxxxxx)") ; 
+                                   VALUES(:zx, :zxx, :zxxx, :zxxxx, :zxxxxx, now(), :zxxxxxx, :zxxxxxxx, :zxxxxxxxx, :zxxxxxxxxx)") ; 
             
             $stmt->execute(array(
                 'zx'        => $name,
@@ -85,7 +85,7 @@ if(isset($_SESSION["user"])){
                 'zxxxxxx'   => $cat,
                 'zxxxxxxx'  => $_SESSION['uid'],
                 'zxxxxxxxx'	=> $tags,
-                'zxxxxxxxx' => $image
+                'zxxxxxxxxx' => $image
             ));
 
             header("location:newad.php") ;  
@@ -195,7 +195,7 @@ if(isset($_SESSION["user"])){
 							            <option value="0">...</option>
 							        <?php
 							            
-							           $stmt = $con->prepare("SELECT * FROM categores") ;
+							           $stmt = $con->prepare("SELECT * FROM categores Where visibilty=0") ;
 							           $stmt -> execute() ; 
 							           $rows = $stmt -> fetchAll() ;
 							           foreach($rows as $row ){

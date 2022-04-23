@@ -29,7 +29,9 @@
 					
 					echo '<div class="card item-box">' ; 
 
-						echo '<img class="img-responsive card-img-top" src="layout/images/coffie.jpg" alt="item">' ;
+						echo '<img class="img-responsive card-img-top" src="admin\upload\images\\' . $item["image"] . '" alt="item">' ;
+						//echo '<img src="admin\upload\images\\' . $item["image"] . '" class="img-fluid">'  ;
+
 
 						echo '<div class="caption">' ; 
 

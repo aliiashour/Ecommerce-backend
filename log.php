@@ -18,7 +18,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && strlen($_POST["user"]) > 0 && strlen(
     $pass = $_POST["password"];
     $hashedpass = sha1($pass) ;
     $stmt = $con->prepare("SELECT 
-                                userId, userName, password 
+                                userId, userName, groupId, password 
                            FROM 
                                 users 
                            WHERE 
@@ -32,11 +32,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && strlen($_POST["user"]) > 0 && strlen(
     
     if($res)
     {
-    	 
-    	
-    	$_SESSION["user"] 	= $data["userName"] ;
-    	$_SESSION["uid"] = $data["userId"] ;
-    	header("location:index.php") ; 
+		/////////////////////////////
+		if($data["groupId"]){
+			//this is a admin one
+			$_SESSION["admin"] 	= $data["userName"] ;
+			$_SESSION["adminId"] = $data['userId'] ;
+		}
+		$_SESSION["user"] 	= $data["userName"] ;
+		$_SESSION["uid"] = $data["userId"] ;
+		header("location:index.php") ; 
     	exit() ; 
     }
 }
@@ -108,8 +112,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && strlen($_POST["user"]) > 0 && $_GET["
 	
 	if(empty($errors)){
 
-		$stmt = $con->prepare("INSERT INTO users(userName, password, email, date) VALUES (?, ?, ?, now()) ");
-		$stmt -> execute(array($name, $hashedpass, $email)) ;   
+		$stmt = $con->prepare("INSERT INTO users(userName, password, email, date, fullName) VALUES (?, ?, ?, now(), ?) ");
+		$stmt -> execute(array($name, $hashedpass, $email, $fullname)) ;   
 		'<div class="alert alert-success text-center">Welcome In Our Website ' . $name . '</div>' ; 
 		$success = '' ; 
 	}
