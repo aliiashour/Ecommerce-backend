@@ -15,7 +15,7 @@ if(!empty($items)){
 
 			foreach ($items as $item) {
 				
-				echo '<div class="col-sm-6 col-md-4">' ; 
+				echo '<div class="col-sm-6 col-md-3">' ; 
 					
 					echo '<div class="card item-box">' ; 
 
