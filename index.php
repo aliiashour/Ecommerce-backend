@@ -55,3 +55,4 @@ if(!empty($items)){
 
 include $tmpls . 'footer.php' ; 
 ob_end_flush() ; 
+?>
