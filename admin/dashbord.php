@@ -131,8 +131,8 @@ if(isset($_SESSION["adminId"])){
                                     foreach($data3 as $com){ 
                             ?>
 
-                                        <li><?php echo $com["userName"] ; echo '<span>' . $com["comment"] . '</span>' ; ?>
-                                        <a class="btn btn-warning btn-md float-right" href="comments.php?do=Edit&item_id=<?php echo $com["c_id"]?>"><i class="fa fa-edit"></i>Edit</a>
+                                        <li><?php echo $com["userName"] ; echo ': <span>' . $com["comment"] . '</span>' ; ?>
+                                        <a class="btn btn-warning btn-md float-right" href="comments.php?do=Edit&comId=<?php echo $com["c_id"]?>"><i class="fa fa-edit"></i>Edit</a>
                                         <?php  if($com["c_status"] == 0){ ?>
 
                                                     <a class="btn btn-info btn-md float-right confirm" href="comments.php?do=Approve&comId=<?php echo $com["c_id"]?>&b=dashbord.php"><i class="fa fa-check"></i> Activate</a>

@@ -1,10 +1,11 @@
 <?php 
 
-//logout.php
+//logout.php of admin module
 
 session_start();
-session_unset() ; 
-session_destroy() ; 
+unset($_SESSION["admin"]) ; 
+unset($_SESSION["adminId"]) ; 
+// session_destroy() ; 
 
 echo "<h2 class='h1 danger-message' style='    
     background-color: red;

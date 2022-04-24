@@ -62,6 +62,21 @@
 	    			<li><span>Item Price</span>: <?php echo $item["price"]?></li>
 	    			<li><span>Item Country</span>: <?php echo $item["country"]?></li>
 	    			<li><span>Item Rating </span>: <?php echo $item["rating"]?></li>
+	    			<li><span>Item Status </span>: 
+                        <?php 
+                            if($item["status"] == 1){
+                                echo 'New' ; 
+                            }elseif($item["status"] == 2){
+                                echo 'Like New' ; 
+                            }elseif($item["status"] == 3){
+                                echo 'Used' ; 
+                            }elseif($item["status"] == 4){
+                                echo 'Old' ; 
+                            }elseif($item["status"] == 5){
+                                    echo 'VeryfOld' ; 
+                            }
+                        ?>
+                    </li>
 	    			<li><span>Item Category</span>: <a href="categores.php?pageId=<?php echo $item['catId'] ; ?>"><?php echo $item["category"]?></a></li>
 	    			<li><span>Item Publisher</span>: <a href="#"><?php echo $item["publisher"]?></a></li>
                     <li><span>Tags</span>:
@@ -109,8 +124,13 @@
                     if(empty($errors)){
 
                         // Add Comment To Database
+                        //get current user id
+                        $stmt = $con->prepare("SELECT * FROM users WHERE userName = ?");
+                        $stmt -> execute(array($user)) ;   
+                        $info = $stmt -> fetch() ; 
+                        //end getting
                         $stmt = $con->prepare("INSERT INTO comments(comment, item_id, user_id) VALUES(?, ?, ?)") ;
-                        $stmt->execute(array($comment, $item_id, $item['userId'])) ;
+                        $stmt->execute(array($comment, $item_id, $info['userId'])) ;
                         echo '<div class="good text-center">Your Comment Successfully Add</div>'  ;
                     }else{
                         echo $errors[0] ; 

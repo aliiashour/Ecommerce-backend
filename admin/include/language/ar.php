@@ -30,6 +30,7 @@ function lang($phase){
         'SAVE'          => 'حفظ',
         'CEUP'          => 'اسف : انت غير مسموح لك ان تكون هنا', // CANT ENTER UPDATE PAGE
         'UPDATE'        => 'تعديل',
+        'BACK'          =>'رجوع',
         'EDITMEMBERS'   => 'تعديل الاعضاء',
         'UPDATEMEMBERS' => 'تحديث بيانات الاعضاء',
         'CANTUPDATE'    => 'اسف عليك ان تدخل كل حقول الاستمارة او يجب ان لا تقل كلمة السر عن سبعة احرف',

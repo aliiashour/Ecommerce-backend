@@ -27,6 +27,14 @@ if(isset($_SESSION["admin"])){
     $do = isset($_GET["do"]) ? $_GET["do"] : 'Mange' ; 
 
     if($do =="Mange"){
+        $member_count = 5 ; 
+        $page = '';
+        if(isset($_GET["page"])){
+            $page = $_GET["page"] ; 
+        } else{
+            $page = 1; 
+        }
+        $start_from = ( $page - 1 ) * $member_count ; 
         
         echo "<h2 class='text-center h1'
             style='margin: 60px 0px 25px;
@@ -34,7 +42,7 @@ if(isset($_SESSION["admin"])){
             ".lang('MANAGE')."
         </h2>" ;
 
-        $stmt = $con->prepare("SELECT * FROM users WHERE groupId !=1");
+        $stmt = $con->prepare("SELECT * FROM users WHERE groupId !=1 LIMIT $start_from, $member_count");
         $stmt->execute() ;
         $count = $stmt->rowCount() ;
         if($count){
@@ -101,9 +109,45 @@ if(isset($_SESSION["admin"])){
 <?php   }else{
             // there is no data into data base
             echo "<div class='container alert alert-danger text-center' style='margin-top:100px'><h2 class='h1'>There Is No data !!</h2></div>" ; 
-        }  
-            echo "<div class='container'><a class='btn btn-primary btn-lg float-right' style='margin-bottom:20px' href='?do=Add'><i class='fa fa-plus'></i> ".lang('ADDMEMBER')."</a></div> " ; 
-    }elseif($do=="Add"){?>
+        }  ?>
+            <!-- echo "<div class='container'><a class='btn btn-primary btn-lg float-right' style='margin-bottom:20px' href='?do=Add'><i class='fa fa-plus'></i> ".lang('ADDMEMBER')."</a></div> " ;  -->
+            <div class='container'>
+                <div class="row">
+                    <div class='col-sm-12'>
+                        <div class="float-right">
+                            <a class='btn btn-primary btn-lg' style='margin-bottom:20px' href='?do=Add'>
+                                <i class='fa fa-plus'></i> 
+                                Add member
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class="col-sm-12" >
+                        <div class="float-left">
+                            <nav aria-label="...">
+                                <ul class="pagination pagination-sm">
+                                    <?php
+                                            $stmt = $con->prepare("SELECT * FROM users WHERE groupId !=1");
+                                            $stmt->execute() ;
+                                            $count = $stmt->rowCount() ;
+                                            $mem_count = ceil($count/$member_count);
+                                            if($mem_count>=1){
+                                                echo '<li class="page-item '; if($_GET["page"] ==1 || !isset($_GET["page"]) ){ echo 'active' ; } echo '" aria-current="page"><a class="page-link" href="?page=1">1</a></li>';
+                                            }
+                                            for($i = 2; $i<=$mem_count;$i++){
+                                                echo '<li class="page-item '; if($_GET["page"] ==$i){ echo 'active' ; } echo '" aria-current="page">';
+                                                    echo '<a class="page-link" href="?page='.$i.'">'.$i.'</a>';
+                                                echo '</li>';
+                                            }
+                                    ?>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <?php }elseif($do=="Add"){?>
         
 <!--        the form to set new member data-->
         

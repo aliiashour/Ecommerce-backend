@@ -10,6 +10,14 @@ if(isset($_SESSION["adminId"])){
     
     if($do == 'Mange'){
         
+        $comment_count = 5 ; 
+        $page = '';
+        if(isset($_GET["page"])){
+            $page = $_GET["page"] ; 
+        } else{
+            $page = 1; 
+        }
+        $start_from = ( $page - 1 ) * $comment_count ; 
         echo "<h2 class='text-center h1'style='margin: 60px 0px 25px;color: #675858;'>Mange Comments</h2>" ;
 
         $stmt = $con->prepare("SELECT 
@@ -23,7 +31,7 @@ if(isset($_SESSION["adminId"])){
                                INNER JOIN 
                                     items 
                                ON 
-                                    comments.item_id = items.item_id");
+                                    comments.item_id = items.item_id LIMIT $start_from, $comment_count");
         $stmt->execute() ;
         $count = $stmt->rowCount() ;
         if($count){
@@ -70,6 +78,43 @@ if(isset($_SESSION["adminId"])){
             <?php }?>
                     </tbody>
                 </table>
+            </div>
+            <div class='container'>
+                <div class='row'>
+                    <div class="col-sm-12" >
+                        <div class="float-left">
+                            <nav aria-label="...">
+                                <ul class="pagination pagination-sm">
+                                    <?php
+                                        $stmt = $con->prepare("SELECT 
+                                                        comments.*, item_name As item_name, userName As userName
+                                                FROM 
+                                                        comments 
+                                                INNER JOIN 
+                                                        users 
+                                                ON 
+                                                        comments.user_id = users.userId 
+                                                INNER JOIN 
+                                                        items 
+                                                ON 
+                                                        comments.item_id = items.item_id");
+                                        $stmt->execute() ;
+                                        $count = $stmt->rowCount() ;
+                                        $com_count = ceil($count/$comment_count);
+                                        if($com_count>=1){
+                                            echo '<li class="page-item '; if($_GET["page"] ==1 || !isset($_GET["page"]) ){ echo 'active' ; } echo '" aria-current="page"><a class="page-link" href="?page=1">1</a></li>';
+                                        }
+                                        for($i = 2; $i<=$com_count;$i++){
+                                            echo '<li class="page-item '; if($_GET["page"] ==$i){ echo 'active' ; } echo '" aria-current="page">';
+                                                echo '<a class="page-link" href="?page='.$i.'">'.$i.'</a>';
+                                            echo '</li>';
+                                        }
+                                    ?>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
             </div>
 
 

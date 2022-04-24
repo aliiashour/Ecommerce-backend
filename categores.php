@@ -2,6 +2,7 @@
 
 	// categoers.php
 	session_start() ; 
+	$pageTitle='categories' ; 
 
 	include "init.php" ;
 	
@@ -16,12 +17,13 @@
 	// Get Category Id From Link
 
 	$catId = intval($_GET["pageId"]) ;
-	
+	$pageTitle = 'categores' ; 
 	// Get All Items Related With This Categorey Helping By $catId
 
 	$items = getItems($catId) ;
 
 	// Echo All Items Inner CAtegorey If Exist
+	// echo '<div class="text-center"><h2 class="h1">Categorey [ '.$item["name"].' ] </h2></div>' ; 
 
 	if(!empty($items)){ 
 

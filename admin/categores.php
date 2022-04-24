@@ -11,10 +11,19 @@
         $do = isset($_GET["do"]) ? $_GET["do"] : 'Mange' ; 
         
         if($do == "Mange"){
+            $category_count = 2 ; 
+            $page = '';
+            if(isset($_GET["page"])){
+                $page = $_GET["page"] ; 
+            } else{
+                $page = 1; 
+            }
+            $start_from = ( $page - 1 ) * $category_count ; 
+
             
             $sortArr = array("ASC", "DESC");
             $order = isset($_GET["sort"]) && in_array($_GET["sort"], $sortArr) ? $_GET["sort"] : "ASC"   ;
-            $stmt = $con->prepare("SELECT * FROM categores WHERE parent = 0 ORDER BY ordering $order"); 
+            $stmt = $con->prepare("SELECT * FROM categores WHERE parent = 0 ORDER BY ordering $order LIMIT $start_from, $category_count"); 
             $stmt -> execute() ;
             $cats = $stmt->fetchAll() ; ?>
             
@@ -89,7 +98,45 @@
                             </div>
                         </div>
                     </div>
-                    <div><a class='btn btn-primary btn-lg float-right' style='margin-bottom:20px' href='?do=Add'><i class='fa fa-plus'></i> ADD New Categorey</a></div>
+                </div>
+
+            </div>
+            
+
+            <div class='container'>
+                <div class="row">
+                    <div class='col-sm-12'>
+                        <div class="float-right">
+                            <a class='btn btn-primary btn-lg' style='margin-bottom:20px' href='?do=Add'>
+                                <i class='fa fa-plus'></i> 
+                                Add category
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class="col-sm-12" >
+                        <div class="float-left">
+                            <nav aria-label="...">
+                                <ul class="pagination pagination-sm">
+                                    <?php
+                                            $stmt = $con->prepare("SELECT * FROM categores WHERE parent = 0 ORDER BY ordering $order"); 
+                                            $stmt->execute() ;
+                                            $count = $stmt->rowCount() ;
+                                            $cat_count = ceil($count/$category_count);
+                                            if($cat_count>=1){
+                                                echo '<li class="page-item '; if($_GET["page"] ==1 || !isset($_GET["page"]) ){ echo 'active' ; } echo '" aria-current="page"><a class="page-link" href="?page=1">1</a></li>';
+                                            }
+                                            for($i = 2; $i<=$cat_count;$i++){
+                                                echo '<li class="page-item '; if($_GET["page"] ==$i){ echo 'active' ; } echo '" aria-current="page">';
+                                                    echo '<a class="page-link" href="?page='.$i.'">'.$i.'</a>';
+                                                echo '</li>';
+                                            }
+                                    ?>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
                 </div>
             </div>
 <?php        }elseif ($do == "Add"){?>
@@ -383,7 +430,7 @@
                         $stmt -> execute(array($catName, $description, $ordering, $visibilty, $comment, $ads, $catId)) ; 
                     
                     }
-                    echo '<h2 class="h1">'.$stmt->rowCount().'</h2>' ; 
+                    echo '<h2 class="h1 text-center">numbers of fileds Updated: '.$stmt->rowCount().'</h2>' ; 
                     
                 }else{
                         $errMes = '<div class="container alert alert-danger text-center" style="font-size:25px ; margin: 60px auto 20px"<h2       class="text-center h1" style="color: #675858;">You Should Enter Category Field Name</h2></div>' ; 

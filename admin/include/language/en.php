@@ -40,6 +40,7 @@ function lang($phase){
         'SAVE'          => 'Save',
         'CEUP'          => 'Sorry , You Are Not Allowed To Be Here :DD', // CANT ENTER UPDATE PAGE
         'UPDATE'        => 'Update',
+        'BACK'          =>'Back',
         'EDITMEMBERS'   => 'Edit Members',
         'UPDATEMEMBERS' => 'Update Members',
         'CANTUPDATE'    => 'Sorry , You Should Enter All Fields In Form Or Password Should Be More Than 7 Characters',
