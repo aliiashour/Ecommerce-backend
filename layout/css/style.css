@@ -7,11 +7,15 @@
 body{
     background-color: #eae6e675 ; 
 }
-/*
 .container{
-    width: 800px ; 
+    width: 100% ; 
 }
-*/
+
+
+.container .row{
+    width: 100% ; 
+}
+
 .rtl{
     direction: rtl;
     text-align: right;
