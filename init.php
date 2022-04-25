@@ -13,6 +13,19 @@ if(isset($_SESSION["user"])) {
 
 	$user = $_SESSION["user"];
 
+    if(!isset($_SESSION["admin"])){
+
+        if(isset($_SESSION["LAST_ACTIVE_TIME"])){
+            if(time()-$_SESSION["LAST_ACTIVE_TIME"] >5){
+                header("location:logout.php") ;
+            }
+        }
+        
+        $_SESSION["LAST_ACTIVE_TIME"] = time() ; 
+    }
+    
+    //include 'user_auth_session.php'  ; 
+
 }
 
 $tmpls      = "include/template/" ;     // template files 

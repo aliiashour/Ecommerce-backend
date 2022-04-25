@@ -2,6 +2,7 @@
 // index.php
 ob_start() ; 
 session_start();
+
 $pageTitle='Shop' ; 
 //include "init.php" ;
 include "init.php" ;
@@ -11,6 +12,7 @@ $items = getAllItems() ;
 // Echo All Items Inner CAtegorey If Exist
 
 if(!empty($items)){ 
+
 	echo '<div class="container all-items">' ;
 		echo '<div class="row">' ;
 

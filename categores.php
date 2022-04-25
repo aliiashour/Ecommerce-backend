@@ -3,6 +3,7 @@
 
 	// categoers.php
 	session_start() ; 
+
 	$pageTitle='categories' ; 
 
 	include "init.php" ;
