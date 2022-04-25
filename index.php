@@ -3,6 +3,7 @@
 ob_start() ; 
 session_start();
 $pageTitle='Shop' ; 
+//include "init.php" ;
 include "init.php" ;
 
 $items = getAllItems() ;
