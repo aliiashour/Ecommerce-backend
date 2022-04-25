@@ -235,6 +235,9 @@ h2.h1{
     margin-right: 2px;
     margin-top: -6px;
 }
+.collapse .navbar-nav .nav-item .activeLink{
+    color: rgb(189, 189, 230);
+}
 /*  End Framwork  */
 @media (max-width: 501px){
  

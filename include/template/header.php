@@ -50,12 +50,14 @@
                                         
                                         echo '<a href="log.php">Login/Signup</a>' ; 
                                     
+                                    } 
+                                    
+                                    if(isset($_SESSION["admin"])){
+                                        echo ' | <a href="admin">dashboard</a>'; 
                                     }
-
                                     
 
                                 ?>
-                                | <a href="admin">dashboard</a>
                             </div>
                         
   
@@ -71,7 +73,7 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#app-nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 </button>
-
+                
                 <div class="collapse navbar-collapse justify-content-end" id="app-nav">
                     <ul class="navbar-nav">                
                         <?php
@@ -80,7 +82,12 @@
                             foreach ($cats as $cat) {
                                
                                 echo '<li class="nav-item">' ;
-                                    echo '<a class="nav-link" href="categores.php?pageId=' . $cat['id'] . '">' . $cat["name"] . '</a>'  ; 
+                                if($cat["name"] == getTitle()){
+                                    echo '<a class="nav-link activeLink" data-name="'.$cat["name"].'" href="categores.php?pageId=' . $cat['id'] . '&catName='.$cat["name"].' ">' . $cat["name"] . '</a>'  ; 
+                                }else{
+                                    echo '<a class="nav-link" data-name="'.$cat["name"].'" href="categores.php?pageId=' . $cat['id'] . '&catName='.$cat["name"].' ">' . $cat["name"] . '</a>'  ; 
+                                }
+                            
                                 echo '</li>' ; 
                             }
 
