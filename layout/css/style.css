@@ -349,3 +349,10 @@ h2.h1{
 .tag:hover{
     background-color: #f5ecec ; 
 }
+
+/*start of handle the sub categorey Nameing*/
+
+.container .collapse .navbar-nav .nav-item .nav-link.activeLink{
+    color: rgb(189, 189, 230);
+}
+/*end of handle the sub categorey Nameing*/
