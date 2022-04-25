@@ -4,8 +4,12 @@
 	// categoers.php
 	session_start() ; 
 
-	$pageTitle='categories' ; 
+	$pageTitle = "categores" ; 
 
+	
+	if(isset($_GET["catName"]) && $_GET["catName"] != ''){
+		$pageTitle=$_GET["catName"] ; 
+	}
 	include "init.php" ;
 	
 	echo '<div class="container">' ;
@@ -19,7 +23,6 @@
 	// Get Category Id From Link
 
 	$catId = intval($_GET["pageId"]) ;
-	$pageTitle = 'categores' ; 
 	// Get All Items Related With This Categorey Helping By $catId
 
 	$items = getItems($catId) ;
