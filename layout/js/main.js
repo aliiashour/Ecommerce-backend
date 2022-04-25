@@ -22,4 +22,23 @@ $(document).ready(function(){
         $(".live-preview ." + $(this).data('scope')).text( $(this).val() ) ;
     }) ; 
 
+/*
+    setInterval(function(){
+        check_user_auth() ; 
+    },2000);
+
+    function check_user_auth(){        
+        jQuery.ajax({
+            url:'user_auth_session.php',
+            type:'post',
+            data:'type=ajax',
+            success:function(res){
+                if(res=='logout'){
+                    
+                    window.location.href='logout.php';
+                }
+            }
+        });
+    }
+    */
 });

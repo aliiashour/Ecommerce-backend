@@ -4,11 +4,10 @@
 	
 	ob_start() ;
 	session_start() ;
-	
+
 	$pageTitle = "Items" ; 
 	
 	include 'init.php' ; 
-
 	// Check Items Id
 
     $item_id 	= isset($_GET["id"]) && is_numeric($_GET["id"]) ? intval($_GET["id"]) : 0 ;  

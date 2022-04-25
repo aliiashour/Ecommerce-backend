@@ -203,3 +203,4 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && strlen($_POST["user"]) > 0 && $_GET["
 <?php  
 
 include $tmpls . "footer.php" ; 
+?>
