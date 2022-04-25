@@ -220,7 +220,7 @@ if(isset($_SESSION["user"])){
 							
 						<div class="card item-box live-preview">
 
-							<img class="img-responsive card-img-top" src="layout/images/coffie.jpg" alt="item">
+							<img class="img-responsive card-img-top" src="layout/images/constProduct.png" alt="item">
 							
 							<div class="caption">
 
