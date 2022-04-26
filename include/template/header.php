@@ -45,7 +45,7 @@
 
                                     if(isset($_SESSION["user"])){
 
-                                        echo '<img src="layout/images/b.jpg" alt="me" class="mine rounded-circle imr-fluid img-thumbnail">' . '<span>'. $_SESSION["user"] . '</span>' ; 
+                                        echo '<img src="layout/images/b.jpg" alt="me" class="mine rounded-circle imr-fluid img-thumbnail"><a href="profile.php"><span>'. $_SESSION["user"] . '</span></a>' ; 
                                         
                                     
                                     }else{
