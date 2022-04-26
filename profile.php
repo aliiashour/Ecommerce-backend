@@ -4,15 +4,31 @@
 	
 	$pageTitle = "My Profile" ; 
 	
-	include 'init.php' ; 
 	
-	if( isset($_SESSION["user"]) ){
+	if(isset($_GET["publisher"]) && $_GET["publisher"] != ''){//comes from items
+
+		$pageTitle=$_GET["publisher"]." Profile" ; 
+	}
+	
+	include 'init.php' ; 
+	if( isset($_GET["guest"]) && $_GET["guest"]=="true" ){//no session
+		$user = strtolower($_GET["publisher"] );
+	}
+
+	if( isset($_SESSION["user"]) || (isset($_GET["guest"]) && $_GET["guest"]=="true")){
+
+		//i should do if it a guest and not session so $user = user publish the item
+		if( (isset($_GET["publisher"]) && $_GET["publisher"]!="")){
+			$user = strtolower($_GET["publisher"] ); 
+		}
 
 		// Get User With This Session Name Data From DAtbase
+		
 
 		$stmt = $con->prepare("SELECT * FROM users WHERE userName = ?");
 		$stmt -> execute(array($user)) ;   
 		$info = $stmt -> fetch() ; 
+		
 
 ?>
 
@@ -32,28 +48,40 @@
 							
 					</li>
 					<li>
-						<i class="fa fa-envelope fa-fw"></i>
 
-						<?php echo $info['email'] ?>
+						<?php 
+							if(!isset($_GET["guest"]) && !isset($_GET["publisher"])){
+								echo '<i class="fa fa-envelope fa-fw"></i>';
+								echo $info['email'] ;
+							}
+						?>
 						
 					</li>
 					<li>
 
 						<i class="fa fa-unlock-alt fa-fw"></i>
 
-						<?php if( strlen($info['fullname']) > 0 ){ echo $info['fullname'] ;  }else{ echo 'There Is No Fulname' ;} ?>
+						<?php if( strlen($info['fullname']) > 0 ){ echo $info['fullname'] ;  }else{ echo 'There Is No Fullname' ;} ?>
 							
 					</li>  
 					<li>
-						<i class="fa fa-calendar fa-fw"></i>
-						<?php echo $info['date'] ?>
+						<?php 
+							if(!isset($_GET["guest"]) && !isset($_GET["publisher"])){
+								echo '<i class="fa fa-calendar fa-fw"></i>';
+								echo $info['date'] ;
+							}
+						?>
 							
 					</li>
 				</ul>
-				<span class="btn btn-warning btn-sm float-right">
-					<i class="fa fa-edit"></i>
-					<a href="#">Edit Profile</a>
-				</span>
+				<?php 
+					if(!isset($_GET["guest"]) && !isset($_GET["publisher"])){
+						echo '<span class="btn btn-warning btn-sm float-right">
+							<i class="fa fa-edit"></i>
+							<a href="#">Edit Profile</a>
+						</span>';
+					}
+				?>
 			</div>
 		</div>
 	</div>
@@ -66,7 +94,7 @@
 				My Ads
 			</div>
 			<div class="panel-body">
-				<div class="row">
+				<div class="row justify-content-center">
 					<?php 
 				
 						// Get User Items With His Id From DAtbase
@@ -82,18 +110,20 @@
 						}else{
 
 							// Show Data
-
+							$i = 0 ; 
 							foreach ($items as $item) {
-								 
-								echo '<div class="col-sm-6 col-md-4">' ; 
+								$i++ ; 
+								echo '<div class="col-sm-6 col-md-3">' ; 
 									
 									echo '<div class="card item-box">' ; 
-
-										if($item["image"] !=''){
-											echo '<img src="admin\upload\images\\' . $item["image"] . '" class="img-fluid">'  ;
-										}else{
-											echo '<img src="admin\upload\images\constad.jpg" class="img-fluid">'  ;
-										}
+										echo '<div class="img-container">' ;
+										
+											if($item["image"] !=''){
+												echo '<img src="admin\upload\images\\' . $item["image"] . '" class="img-fluid" alt="photo">'  ;
+											}else{
+												echo '<img src="admin\upload\images\constad.jpg" class="img-fluid" alt="photo">'  ;
+											}
+										echo '</div>';
 
 										echo '<div class="caption">' ; 
 
@@ -112,13 +142,18 @@
 											} 
 
 										echo '</div>' ; 
-									
+							
 									echo '</div>' ; 
-								
+						
 								echo '</div>' ;
 							 
 								
+								if($i%4==0){			
+									echo '</div>' ;
+									echo '<div class="row">' ;
+								}
 							}
+							echo '</div>';
 
 						}
 					?>
@@ -127,6 +162,7 @@
 		</div>
 	</div>
 </div>
+
 <div class="prov-items block">
 	<div class="container">
 		<div class="panel panel-default">
