@@ -23,7 +23,6 @@ body{
 /*  end global*/
 
 /*  start Login Form*/
-.
 
 
 
@@ -34,9 +33,22 @@ body{
     padding: 5px ;
     position: relative;
     margin-bottom: 5px ;  
+    min-width: 200px ;
 }
 .card.item-box{
     padding: 5px ; 
+}
+
+.card .img-container{
+    min-width: 235px;
+    height: 200px;
+    background-size: 100% 100%;
+    padding: 0px;
+    margin: 0px; 
+}
+.card .img-container img {
+    width: 100%;
+    height: 100%; 
 }
 .card .caption{
     overflow: hidden;
@@ -133,13 +145,18 @@ vertical-align: top;
 
 }
 
+.upper-nav a{
+    color:#369a5e;
+    text-decoration: none;
+}
+.upper-nav a:hover{
+    color:#222233;
+}
 /*  Start Card  */
 
 
 /*  Start Form */
-.chose{
-   
-}
+
 .chose .login:hover,
 .chose .signin:hover{
     color: #ccbbbb ;
