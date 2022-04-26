@@ -77,8 +77,20 @@
                             }
                         ?>
                     </li>
+                    <?php
+                    if(isset($_SESSION["user"])&& strtolower($_SESSION["user"]) != strtolower($item["publisher"])){
+                        // && $_SESSION["user"] == strtolower($item["publisher"])
+                        // echo  $_SESSION["user"]) ; 
+                        $qq = '?publisher='.$item["publisher"] .'' ; 
+                        // $qq = '' ; 
+                    }elseif(isset($_SESSION["user"])&& strtolower($_SESSION["user"]) == strtolower($item["publisher"])){
+                        $qq='' ; 
+                    }else if(!isset($_SESSION["user"])){
+                        $qq = '?guest=true&publisher='.$item["publisher"] .'' ; 
+                    }
+                    ?>
 	    			<li><span>Item Category</span>: <a href="categores.php?pageId=<?php echo $item['catId'] ; ?>"><?php echo $item["category"]?></a></li>
-	    			<li><span>Item Publisher</span>: <a href="#"><?php echo $item["publisher"]?></a></li>
+	    			<li><span>Item Publisher</span>: <a href="profile.php<?php echo $qq; ?>"><?php echo $item["publisher"]?></a></li>
                     <li><span>Tags</span>:
                         <?php 
                             $tags = explode(',', $item["item_tags"]);

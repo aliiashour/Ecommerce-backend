@@ -21,18 +21,20 @@
 		// Echo All Items Inner CAtegorey If Exist
 
 		if(!empty($items)){ 
+			echo '<div class="row">';
 
-			echo '<div class="row">' ;
-
+			// Show Data
+			$i = 0 ; 
 			foreach ($items as $item) {
-				
-				echo '<div class="col-sm-6 col-md-4">' ; 
+				$i++ ; 
+				echo '<div class="col-sm-6 col-md-3">' ; 
 					
 					echo '<div class="card item-box">' ; 
-
-						echo '<img class="img-responsive card-img-top" src="admin\upload\images\\' . $item["image"] . '" alt="item">' ;
-						//echo '<img src="admin\upload\images\\' . $item["image"] . '" class="img-fluid">'  ;
-
+						echo '<div class="img-container">' ;
+						
+							echo '<img src="admin\upload\images\\' . $item["image"] . '" class="img-fluid" alt="photo">'  ;
+							
+						echo '</div>';
 
 						echo '<div class="caption">' ; 
 
@@ -40,17 +42,28 @@
 
 							echo '<p class="card-text lead">' . $item['item_desc'] . '</p>' ;
 
+							echo '<div class="card-date">' . $item['add_date'] . '</div>' ;
+							
 							echo '<span class="price">' . $item['price'] . '$</span>' ;
-							echo '<div class="card-date">' . $item['add_date'] . '</div>' ; 
+
+							if($item['apporove'] == 0){
+
+								echo '<span class="un">Not approve</span>' ;
+
+							} 
 
 						echo '</div>' ; 
-					
+			
 					echo '</div>' ; 
-				
+		
 				echo '</div>' ;
-
+			 
+				
+				if($i%4==0){			
+					echo '</div>' ;
+					echo '<div class="row">' ;
+				}
 			}
-	 
 			echo '</div>';
 
 		}else{
