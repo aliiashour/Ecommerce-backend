@@ -31,20 +31,22 @@
 	// echo '<div class="text-center"><h2 class="h1">Categorey [ '.$item["name"].' ] </h2></div>' ; 
 
 	if(!empty($items)){ 
-
-		echo '<div class="row">' ;
+		$i = 0 ; 
+		echo '<div class="row justify-content-center">' ;
 
 		foreach ($items as $item) {
-			
-			echo '<div class="col-sm-6 col-md-4">' ; 
+			$i++ ; 
+			echo '<div class="col-sm-6 col-md-3">' ; 
 				
 				echo '<div class="card item-box">' ; 
-                    
-                    if($item["image"] !=''){
-                        echo '<img src="admin\upload\images\\' . $item["image"] . '" class="img-fluid">'  ;
-                    }else{
-                        echo '<img src="admin\upload\images\constad.jpg" class="img-fluid">'  ;
-                    }
+				echo '<div class="img-container">' ;
+					
+					if($item["image"] !=''){
+						echo '<img src="admin\upload\images\\' . $item["image"] . '" class="img-fluid" alt="pro-phot">'  ;
+					}else{
+						echo '<img src="admin\upload\images\constad.jpg" class="img-fluid" alt="pro-const-phot">'  ;
+					}
+				echo '</div>';
 
 					echo '<div class="caption">' ; 
 
@@ -60,9 +62,12 @@
 				echo '</div>' ; 
 			
 			echo '</div>' ;
+			if($i%4==0){			
+				echo '</div>' ;
+				echo '<div class="row">' ;
+			}
 
 		}
- 
 		echo '</div>';
 
 	}else{

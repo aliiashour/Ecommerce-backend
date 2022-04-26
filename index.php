@@ -12,21 +12,22 @@ $items = getAllItems() ;
 // Echo All Items Inner CAtegorey If Exist
 
 if(!empty($items)){ 
-
+	$i = 0 ; 
 	echo '<div class="container all-items">' ;
-		echo '<div class="row">' ;
+		echo '<div class="row justify-content-center">' ;
 
 			foreach ($items as $item) {
-				
+				$i++ ; 
 				echo '<div class="col-sm-6 col-md-3">' ; 
 					
 					echo '<div class="card item-box">' ; 
-
+					echo '<div class="img-container">' ; 
 	                    if($item["image"] !=''){
-	                        echo '<img src="admin\upload\images\\' . $item["image"] . '" class="img-fluid">'  ;
+	                        echo '<img src="admin\upload\images\\' . $item["image"] . '" class="img-fluid" alt="pro-photo">'  ;
 	                    }else{
-	                        echo '<img src="admin\upload\images\constad.jpg" class="img-fluid">'  ;
+	                        echo '<img src="admin\upload\images\constad.jpg" class="img-fluid" alt="const-pro">'  ;
 	                    }
+					echo '</div>' ; 
 
 						echo '<div class="caption">' ; 
 
@@ -43,6 +44,10 @@ if(!empty($items)){
 					echo '</div>' ; 
 				
 				echo '</div>' ;
+				if($i%4==0){			
+					echo '</div>' ;
+					echo '<div class="row">' ;
+				}
 
 			}
 
