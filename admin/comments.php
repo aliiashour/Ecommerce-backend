@@ -66,8 +66,18 @@ if(isset($_SESSION["adminId"])){
                             <th scope="row"><?php echo $row["c_id"] ;  ?></th>
                             <td><?php echo $row["comment"] ;  ?></td>
                             <td><?php echo $row["c_date"] ;  ?></td>
-                            <td><?php echo $row["item_name"] ;  ?></td>
-                            <td><?php echo $row["userName"] ; ?><td>
+                            <!-- <a href="../items.php?item_id='.$row["item_id"].'"> -->
+                            <td><a href="../items.php?item_id=<?php echo $row["item_id"] ; ?>"><?php echo $row["item_name"] ; ?></a></td>
+                            <?php
+                            
+                                $q = '' ; 
+                                if(strtolower($_SESSION["admin"]) == strtolower($row["userName"])){
+                                    $q = '' ; 
+                                }else{
+                                    $q = '?publisher='.$row["userName"] ;
+                                }
+                            ?>
+                            <td><a href="../profile.php<?php echo $q ; ?>"><?php echo $row["userName"] ;?></a><td>
                             <td><a class="btn btn-warning btn-md"href="?do=Edit&comId=<?php echo $row["c_id"] ;  ?>"><i class="fa fa-edit fw"></i> Edit</a>
                             <a class="btn btn-danger btn-md confirm" href="?do=Delete&comId=<?php echo $row["c_id"] ;  ?>"><i class="fa fa-times fw confirm"></i> Delete</a>
                             <?php

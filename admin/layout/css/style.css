@@ -170,6 +170,9 @@ body{
     color: #000; 
     font-size: 16px ; 
 }
+.table-striped tbody tr td a{
+    text-decoration: none; 
+}
 .table-striped tbody .btn{
     padding: 4px 10px ; 
 }

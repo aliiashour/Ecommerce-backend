@@ -309,6 +309,22 @@ h2.h1{
     position: relative;
     line-height: 37px ; 
 }
+
+/* EDITING */
+
+.editform input:not(:last-child){
+    position: relative  ; 
+
+}
+.editform .form-group  i{
+    position: absolute;
+    top: 9px;
+    font-size: 20px;
+    right: -17px;
+    color: #626892;
+    cursor: pointer;
+}
+/* EDITING */
 .commenter .comment span, 
 .un{
     float: right;

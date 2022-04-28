@@ -78,11 +78,17 @@ if(isset($_SESSION["admin"])){
                         <th scope="row"><?php echo $row["userId"] ;  ?></th>
                         <td>
                             <?php 
+                                $q = '' ; 
+                                if(strtolower($_SESSION["admin"]) == strtolower($row["userName"])){
+                                    $q = '' ; 
+                                }else{
+                                    $q = '?publisher='.$row["userName"] ;
+                                }
                                 
                                 if($row["image"] !=''){
-                                    echo '<img src="upload\images\\' . $row["image"] . '" class="avatar img-fluid img-thumbnail rounded-circle">'  ;
+                                    echo '<a href="../profile.php'.$q.'"><img src="upload\images\\' . $row["image"] . '" class="avatar img-fluid img-thumbnail rounded-circle"></a>'  ;
                                 }else{
-                                    echo '<img src="upload\images\const.jpg" class="avatar img-fluid img-thumbnail rounded-circle">'  ;
+                                    echo '<a href="../profile.php'.$q.'"><img src="upload\images\const.jpg" class="avatar img-fluid img-thumbnail rounded-circle"></a>'  ;
                                 }
 
 

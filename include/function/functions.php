@@ -47,14 +47,47 @@ function getSubCats(){
     ==============================================
 */
 
-function getItems($catId){
+function getItems($catId, $start_from, $item_count){
     global $con ; 
-    $stmt = $con->prepare("SELECT * FROM items WHERE cat_id = ? AND apporove = 1 ORDER BY item_id ASC") ;
+
+    $stmt = $con->prepare("SELECT parent FROM categores WHERE id = ?") ;
     $stmt ->execute(array($catId)) ;
     $items = $stmt->fetchAll() ; 
-    return $items ; 
+    if($items[0]["parent"] == "0"){
+        //main category
+        $stmt = $con->prepare("SELECT * FROM items WHERE cat_id in (select  id FROM categores WHERE categores.parent = $catId ) AND apporove = 1 ORDER BY item_id ASC LIMIT $start_from, $item_count") ;
+        $stmt ->execute(array($catId)) ;
+        $items = $stmt->fetchAll() ; 
+        return $items ; 
+    }else{
+        //subCategory
+        $stmt = $con->prepare("SELECT * FROM items WHERE cat_id = ? AND apporove = 1 ORDER BY item_id ASC LIMIT $start_from, $item_count") ;
+        $stmt ->execute(array($catId)) ;
+        $items = $stmt->fetchAll() ; 
+        return $items ; 
+    }
 }
 
+function getItemsConut($catId){
+    global $con ; 
+
+    $stmt = $con->prepare("SELECT parent FROM categores WHERE id = ?") ;
+    $stmt ->execute(array($catId)) ;
+    $items = $stmt->fetchAll() ; 
+    if($items[0]["parent"] == "0"){
+        //main category
+        $stmt = $con->prepare("SELECT * FROM items WHERE cat_id in (select  id FROM categores WHERE categores.parent = $catId ) AND apporove = 1 ORDER BY item_id ASC") ;
+        $stmt ->execute(array($catId)) ;
+        $items = $stmt->rowCount() ; 
+        return $items ; 
+    }else{
+        //subCategory
+        $stmt = $con->prepare("SELECT * FROM items WHERE cat_id = ? AND apporove = 1 ORDER BY item_id ASC") ;
+        $stmt ->execute(array($catId)) ;
+        $items = $stmt->rowCount() ; 
+        return $items ; 
+    }
+}
 /*
     ==============================================
     == This function Get Items From End From Database
@@ -63,11 +96,18 @@ function getItems($catId){
     ==============================================
 */
 
-function getTags($tagName){
+function getTags($tagName, $start_from, $item_count){
+    global $con ; 
+    $stmt = $con->prepare("SELECT * FROM items WHERE item_tags like '%" . $tagName . "%' AND apporove = 1 ORDER BY item_id DESC LIMIT $start_from, $item_count") ;
+    $stmt ->execute() ;
+    $items = $stmt->fetchAll() ; 
+    return $items ; 
+}
+function getTagsCount($tagName){
     global $con ; 
     $stmt = $con->prepare("SELECT * FROM items WHERE item_tags like '%" . $tagName . "%' AND apporove = 1 ORDER BY item_id DESC") ;
     $stmt ->execute() ;
-    $items = $stmt->fetchAll() ; 
+    $items = $stmt->rowCount() ; 
     return $items ; 
 }
 

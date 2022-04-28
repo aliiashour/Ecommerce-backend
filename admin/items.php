@@ -84,10 +84,10 @@
                                             //print_r($img_arr) ; 
                                             echo "SLIDER" ; 
                                         }else{
-                                            echo '<img src="upload\images\\' . $img_arr[0] . '" class="avatar img-fluid img-thumbnail rounded-circle" alt="pro-photo">'  ;
+                                            echo '<a href="../items.php?item_id='.$row["item_id"].'"><img src="upload\images\\' . $img_arr[0] . '" class="avatar img-fluid img-thumbnail rounded-circle" alt="pro-photo"></a>'  ;
                                         }
                                     }else{
-                                        echo '<img src="upload\images\constad.jpg" class="avatar img-fluid img-thumbnail rounded-circle" alt="const-pro">'  ;
+                                        echo '<a href="../items.php?item_id='.$row["item_id"].'"><img src="upload\images\constad.jpg" class="avatar img-fluid img-thumbnail rounded-circle" alt="const-pro"></a>'  ;
                                     }
 
 
@@ -114,8 +114,18 @@
                                     }
                                 ?>
                             </td>
-                            <td><?php echo $row["publisher"] ; ?></td>
-                            <td><?php echo $row["category"] ; ?></td>
+                            <?php
+                            
+                            $q = '' ; 
+                            if(strtolower($_SESSION["admin"]) == strtolower($row["publisher"])){
+                                $q = '' ; 
+                            }else{
+                                $q = '?publisher='.$row["publisher"] ;
+                            }
+                            ?>
+                            <td><a href="../profile.php<?php echo $q ; ?>"><?php echo $row["publisher"] ; ?></a></td>
+                            <!-- categores.php?pageId=26&catName=clothes -->
+                            <td><a href="../categores.php?pageId=<?php echo $row["cat_id"] ; ?>&catName=<?php echo $row["category"] ; ?>"><?php echo $row["category"] ; ?></a></td>
                             <td><a class="btn btn-warning btn-md"href="?do=Edit&item_id=<?php echo $row["item_id"] ;  ?>"><i class="fa fa-edit fw"></i> Edit</a>
                             <a class="btn btn-danger btn-md confirm" href="?do=Delete&item_id=<?php echo $row["item_id"] ;  ?>"><i class="fa fa-times fw confirm"></i> Delete</a>
                                 <?php if( $row["apporove"] == 0 ){ echo '<a class="btn btn-info btn-md confirm" href="?do=Approve&item_id='.$row["item_id"].'"><i class="fa fa-check fw"></i> Activate</a>'; } ?>
