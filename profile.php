@@ -118,16 +118,24 @@
 									echo '<div class="card item-box">' ; 
 										echo '<div class="img-container">' ;
 										
-											if($item["image"] !=''){
-												echo '<img src="admin\upload\images\\' . $item["image"] . '" class="img-fluid" alt="photo">'  ;
+											$img_arr = explode('/',$item["image"]);
+											if(!empty($img_arr)){
+												if(isset($_GET["item_id"]) &&$_GET["item_id"] !='' && count($img_arr) > 1){
+													//slider ere
+													//print_r($img_arr) ; 
+													echo "SLIDER" ; 
+												}else{
+													echo '<img src="admin\upload\images\\' . $img_arr[0] . '" class="img-fluid" alt="pro-photo">'  ;
+													echo "<div><strong><code>multi photos don't supported</code></strong></div>";
+												}
 											}else{
-												echo '<img src="admin\upload\images\constad.jpg" class="img-fluid" alt="photo">'  ;
+												echo '<img src="admin\upload\images\constad.jpg" class="img-fluid" alt="const-pro">'  ;
 											}
 										echo '</div>';
 
 										echo '<div class="caption">' ; 
 
-											echo '<h5 class="card-title"><a href="items.php?id=' . $item['item_id'] . '">' . $item['item_name'] . '</a></h5>' ; 
+											echo '<h5 class="card-title"><a href="items.php?item_id=' . $item['item_id'] . '">' . $item['item_name'] . '</a></h5>' ; 
 
 											echo '<p class="card-text lead">' . $item['item_desc'] . '</p>' ;
 

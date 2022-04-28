@@ -45,7 +45,7 @@
 
                                     if(isset($_SESSION["user"])){
 
-                                        echo '<img src="layout/images/b.jpg" alt="me" class="mine rounded-circle imr-fluid img-thumbnail"><a href="profile.php"><span>'. $_SESSION["user"] . '</span></a>' ; 
+                                        echo '<img src="layout/images/avatar.jpg" alt="me" class="mine rounded-circle imr-fluid img-thumbnail"><a href="profile.php"><span>'. $_SESSION["user"] . '</span></a>' ; 
                                         
                                     
                                     }else{
@@ -101,19 +101,17 @@
                                 echo '<li class="nav-item">'; 
                                     echo '<div class="dropdown">' ;
                                         
-                                        echo '<button class="btn btn-secondary dropdown-toggle" type="button" id="supcat" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        echo '<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                             Sub Categores
                                                 </button>' ;
                                         
-                                        echo '<div class="dropdown-menu" aria-labelledby="supcat">' ;
+                                        echo '  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">' ;
                                             
                                             foreach ($subcats as $subcat) {
-
-                                                echo '<a class="dropdown-item" href="categores.php?pageId=' . $subcat['id'] . '"> ' . $subcat["name"] . ' </a>' ;
-
+                                                echo '<li><a class="dropdown-item" href="categores.php?pageId=' . $subcat['id'] . '"> ' . $subcat["name"] . ' </a></li>' ; 
                                             }
 
-                                        echo '</div>' ;
+                                        echo '</ul>' ;
 
                                     echo '</div>' ;
                                 echo '</li>' ;
