@@ -76,11 +76,18 @@
                             <th scope="row"><?php echo $row["item_id"] ;  ?></th>
                             <td>
                                 <?php 
-                                    
-                                    if($row["image"] !=''){
-                                        echo '<img src="upload\images\\' . $row["image"] . '" class="avatar img-fluid img-thumbnail rounded-circle">'  ;
+    /////////////////////.//////////////////////////////////////////
+                                    $img_arr = explode('/',$row["image"]);
+                                    if(!empty($img_arr)){
+                                        if(isset($_GET["item_id"]) &&$_GET["item_id"] !='' && count($img_arr) > 1){
+                                            //slider ere
+                                            //print_r($img_arr) ; 
+                                            echo "SLIDER" ; 
+                                        }else{
+                                            echo '<a href="../items.php?item_id='.$row["item_id"].'"><img src="upload\images\\' . $img_arr[0] . '" class="avatar img-fluid img-thumbnail rounded-circle" alt="pro-photo"></a>'  ;
+                                        }
                                     }else{
-                                        echo '<img src="upload\images\const.jpg" class="avatar img-fluid img-thumbnail rounded-circle">'  ;
+                                        echo '<a href="../items.php?item_id='.$row["item_id"].'"><img src="upload\images\constad.jpg" class="avatar img-fluid img-thumbnail rounded-circle" alt="const-pro"></a>'  ;
                                     }
 
 
@@ -107,8 +114,18 @@
                                     }
                                 ?>
                             </td>
-                            <td><?php echo $row["publisher"] ; ?></td>
-                            <td><?php echo $row["category"] ; ?></td>
+                            <?php
+                            
+                            $q = '' ; 
+                            if(strtolower($_SESSION["admin"]) == strtolower($row["publisher"])){
+                                $q = '' ; 
+                            }else{
+                                $q = '?publisher='.$row["publisher"] ;
+                            }
+                            ?>
+                            <td><a href="../profile.php<?php echo $q ; ?>"><?php echo $row["publisher"] ; ?></a></td>
+                            <!-- categores.php?pageId=26&catName=clothes -->
+                            <td><a href="../categores.php?pageId=<?php echo $row["cat_id"] ; ?>&catName=<?php echo $row["category"] ; ?>"><?php echo $row["category"] ; ?></a></td>
                             <td><a class="btn btn-warning btn-md"href="?do=Edit&item_id=<?php echo $row["item_id"] ;  ?>"><i class="fa fa-edit fw"></i> Edit</a>
                             <a class="btn btn-danger btn-md confirm" href="?do=Delete&item_id=<?php echo $row["item_id"] ;  ?>"><i class="fa fa-times fw confirm"></i> Delete</a>
                                 <?php if( $row["apporove"] == 0 ){ echo '<a class="btn btn-info btn-md confirm" href="?do=Approve&item_id='.$row["item_id"].'"><i class="fa fa-check fw"></i> Activate</a>'; } ?>
@@ -219,7 +236,7 @@
                     <div class="form-group row">
                         <label for="inputFullname" class="col-sm-2 col-form-label"><strong>Avatar</strong></label>
                         <div class="col-sm-10">
-                          <input required type="file" class="form-control col-sm-10 float-right" id="inputFullname" name="image" placeholder="">
+                          <input required type="file" class="form-control col-sm-10 float-right" id="inputFullname" name="image[]" placeholder="feel free to add one ore more photo" multiple>
                         </div>
                     </div>        
                     <div class="form-group row">
@@ -310,20 +327,12 @@
                 if($_POST["name"] !=''){
 
 
-                    // Get Uploded File Info
-
-                    $imageName = $_FILES["image"]["name"] ;
-                    $imageTmp  = $_FILES["image"]["tmp_name"] ;
-                    $imageType = $_FILES["image"]["type"] ; 
-                    $imageSize = $_FILES["image"]["size"] ;
 
                     // Exetinstion Allowed To Upload
 
+        
                     $allowedExetintion = array("jpeg", "jpg", "png", "gif") ;
-
-                    $imageExtention = explode('.', $imageName) ;
-                    
-                    $imageExtention = strtolower($imageExtention[1]) ; 
+                    $errors = array() ; 
 
                     $name           = $_POST["name"]  ;
                     $description    = $_POST["description"]  ;
@@ -333,7 +342,6 @@
                     $category       = $_POST["category"] ; 
                     $member         = $_POST["member"] ;
                     $tags           = $_POST["tags"] ;
-                    $errors = [] ; 
                     if(empty($name) || strlen($name) < 3){
                         $errors[] ="<div class='alert alert-danger'>You Should Enter Your Username And Not Less Than 4 Character</div>" ; 
                     }
@@ -354,35 +362,48 @@
                     }
                     if( $member == 0){
                         $errors[] ="<div class='alert alert-danger'>You Should Enter The Item Member</div>" ; 
-                    }if($imageName == ''){
-                        $errors[] ="<div class='alert alert-danger'> Upload Your Image</div>" ;  
-                    
-                    }if(!in_array($imageExtention, $allowedExetintion) && !empty($imageName)){
-                        $errors[] ="<div class='alert alert-danger'>This Extention is Not <strong>Allowed</strong></div>" ;   
-                    }if($imageSize > 4194304){
-                        $errors[] ="<div class='alert alert-danger'>Image Size Can Not be More Than 4mb</div>" ; 
+                    }
+                    $allImage='' ; 
+                    foreach($_FILES["image"]["tmp_name"] as $key => $value){
+                        $imageName = $_FILES["image"]["name"][$key] ;
+                        $imageTmp  = $_FILES["image"]["tmp_name"][$key] ;
+                        $imageType = $_FILES["image"]["type"][$key] ; 
+                        $imageSize = $_FILES["image"]["size"][$key] ;
+                        
+                
+                        $imageExtention = explode('.', $imageName) ;
+                        
+                        $imageExtention = strtolower($imageExtention[1]) ; 
+                        if($imageName == ''){
+                            $errors[] ="<div class='alert alert-danger'> Upload Your Image</div>" ;  
+                        
+                        }if(!in_array($imageExtention, $allowedExetintion) && !empty($imageName)){
+                            $errors[] ="<div class='alert alert-danger'>This Extention is Not <strong>Allowed</strong></div>" ;   
+                        }if($imageSize > 4194304){
+                            $errors[] ="<div class='alert alert-danger'>Image Size Can Not be More Than 4mb</div>" ; 
+                        }
+                        if(empty($errors)){
+                            $image = rand(0, 1000000) . '_' . $imageName ; 
+                            move_uploaded_file($imageTmp, "upload\images\\" . $image );
+                            $allImage .= $image.'/';
+                        }
                     }
             
                     if(empty($errors)){
+                        $allImage = substr($allImage,0,strlen($allImage)-1) ; 
+                        $stmt = $con->prepare("INSERT INTO items(item_name, item_desc, price, country, status, add_date, cat_id, member_id, item_tags, image) 
+                                            VALUES(:zx, :zxx, :zxxx, :zxxxx, :zxxxxx, now(), :zxxxxxx, :zxxxxxxx, :zxxxxxxxx, :zxxxxxxxxx)") ; 
 
-
-                        $image = rand(0, 1000000) . '_' . $imageName ; 
-                        move_uploaded_file($imageTmp, "upload\images\\" . $image ); 
-
-
-                        $stmt = $con->prepare("INSERT INTO 
-                                                        items(item_name, item_desc, price, country, status, add_date, cat_id, member_id, item_tags, image) 
-                                               VALUES(:zx, :zxx, :zxxx, :zxxxx, :zxxxxx, now(), :zxxxxxx, :zxxxxxxx, :zxxxxxxxx, :zxxxxxxxxx)") ; 
                         $stmt->execute(array(
-                            'zx'        => $name,
-                            'zxx'       => $description,
-                            'zxxx'      => $price,
-                            'zxxxx'     => $country,
-                            'zxxxxx'    => $status,
-                            'zxxxxxx'   => $category,
-                            'zxxxxxxx'  => $member,
-                            'zxxxxxxxx' => $tags,
-                            'zxxxxxxxxx'=> $image
+                        'zx'        	=> $name,
+                        'zxx'       	=> $description,
+                        'zxxx'      	=> $price,
+                        'zxxxx'     	=> $country,
+                        'zxxxxx'    	=> $status,
+                        'zxxxxxx'   	=> $category,
+                        'zxxxxxxx'  	=> $member,
+                        'zxxxxxxxx'		=> $tags,
+                        'zxxxxxxxxx' 	=> $allImage
                         ));
 
                         $errMes = '<div class="container alert alert-success text-center" style="font-size:25px ; margin: 60px auto 20px"<h2 class="text-center h1" style="color: #675858;"> Item Success Add </h2></div>' ; 
@@ -435,7 +456,21 @@
                     <div class="row">
                         <div class="col-sm-4 float-left">
                             <?php 
-                                echo '<img src="upload\images\\' . $item["image"] . '" class="img-fluid">'  ;
+    
+                                $img_arr = explode('/',$item["image"]);
+                                if(!empty($img_arr)){
+                                    if(isset($_GET["item_id"]) &&$_GET["item_id"] !='' && count($img_arr) > 1){
+                                        //slider ere
+                                        //print_r($img_arr) ; 
+                                        echo "SLIDER" ; 
+                                    }else{
+                                        echo '<img src="upload\images\\' . $img_arr[0] . '" class="img-fluid" alt="pro-photo">'  ;
+                                        echo "<div><strong><code>multi photos don't supported</code></strong></div>";
+                                    }
+                                }else{
+                                    echo '<img src="upload\images\constad.jpg" class="avatar img-fluid img-thumbnail rounded-circle" alt="const-pro">'  ;
+                                }
+                                //echo '<img src="upload\images\\' . $item["image"] . '" class="img-fluid">'  ;
                             ?>
                         </div> 
                         <div class="col-sm-8 float-right">

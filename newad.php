@@ -17,21 +17,24 @@ if(isset($_SESSION["user"])){
 
 	if($_SERVER['REQUEST_METHOD'] == 'POST'){
         
+		$allowedExetintion = array("jpeg", "jpg", "png", "gif") ;
+		$errors = array() ; 
 
-        $imageName = $_FILES["image"]["name"] ;
-        $imageTmp  = $_FILES["image"]["tmp_name"] ;
-        $imageType = $_FILES["image"]["type"] ; 
-        $imageSize = $_FILES["image"]["size"] ;
-
+        // $imageName = $_FILES["image"]["name"] ;
+        // $imageTmp  = $_FILES["image"]["tmp_name"] ;
+        // $imageType = $_FILES["image"]["type"] ; 
+        // $imageSize = $_FILES["image"]["size"] ;
+		
+		//print_r($imageTmp);
         // Exetinstion Allowed To Upload
 
-        $allowedExetintion = array("jpeg", "jpg", "png", "gif") ;
+        // $allowedExetintion = array("jpeg", "jpg", "png", "gif") ;
 
-        $imageExtention = explode('.', $imageName) ;
+        // $imageExtention = explode('.', $imageName) ;
         
-        $imageExtention = strtolower($imageExtention[1]) ; 
+        // $imageExtention = strtolower($imageExtention[1]) ; 
 		
-		$errors = array() ; 
+		// $errors = array() ; 
 
 		$name 		= filter_var($_POST["name"], FILTER_SANITIZE_STRING) ; 
 		$desc 		= filter_var($_POST["description"], FILTER_SANITIZE_STRING) ; 
@@ -58,37 +61,76 @@ if(isset($_SESSION["user"])){
 		}
 		if($cat == 0){
 			$errors[] = '<div class="alert alert-danger">Enter Item Categores</div>' ; 
-		}if($imageName == ''){
-            $errors[] ="<div class='alert alert-danger'> Upload Your Image</div>" ;  
+		}
+		$allImage='' ; 
+		foreach($_FILES["image"]["tmp_name"] as $key => $value){
+			$imageName = $_FILES["image"]["name"][$key] ;
+			$imageTmp  = $_FILES["image"]["tmp_name"][$key] ;
+			$imageType = $_FILES["image"]["type"][$key] ; 
+			$imageSize = $_FILES["image"]["size"][$key] ;
+			
+	
+			$imageExtention = explode('.', $imageName) ;
+			
+			$imageExtention = strtolower($imageExtention[1]) ; 
+			if($imageName == ''){
+				$errors[] ="<div class='alert alert-danger'> Upload Your Image</div>" ;  
+			
+			}if(!in_array($imageExtention, $allowedExetintion) && !empty($imageName)){
+				$errors[] ="<div class='alert alert-danger'>This Extention is Not <strong>Allowed</strong></div>" ;   
+			}if($imageSize > 4194304){
+				$errors[] ="<div class='alert alert-danger'>Image Size Can Not be More Than 4mb</div>" ; 
+			}
+			if(empty($errors)){
+				$image = rand(0, 1000000) . '_' . $imageName ; 
+				move_uploaded_file($imageTmp, "admin\upload\images\\" . $image );
+				$allImage .= $image.'/';
+			}
+		}
+
+		// if($imageName == ''){
+        //     $errors[] ="<div class='alert alert-danger'> Upload Your Image</div>" ;  
         
-        }if(!in_array($imageExtention, $allowedExetintion) && !empty($imageName)){
-            $errors[] ="<div class='alert alert-danger'>This Extention is Not <strong>Allowed</strong></div>" ;   
-        }if($imageSize > 4194304){
-            $errors[] ="<div class='alert alert-danger'>Image Size Can Not be More Than 4mb</div>" ; 
-        }
+        // }if(!in_array($imageExtention, $allowedExetintion) && !empty($imageName)){
+        //     $errors[] ="<div class='alert alert-danger'>This Extention is Not <strong>Allowed</strong></div>" ;   
+        // }if($imageSize > 4194304){
+        //     $errors[] ="<div class='alert alert-danger'>Image Size Can Not be More Than 4mb</div>" ; 
+        // }
 
         if(empty($errors)){
-          
-            $image = rand(0, 1000000) . '_' . $imageName ; 
-            move_uploaded_file($imageTmp, "admin\upload\images\\" . $image ); 
+			$allImage = substr($allImage,0,strlen($allImage)-1) ; 
+			echo $allImage ; 
+            // $image = rand(0, 1000000) . '_' . $imageName ; 
+            // move_uploaded_file($imageTmp, "admin\upload\images\\" . $image ); 
 
 
             $stmt = $con->prepare("INSERT INTO 
                                             items(item_name, item_desc, price, country, status, add_date, cat_id, member_id, item_tags, image) 
                                    VALUES(:zx, :zxx, :zxxx, :zxxxx, :zxxxxx, now(), :zxxxxxx, :zxxxxxxx, :zxxxxxxxx, :zxxxxxxxxx)") ; 
             
-            $stmt->execute(array(
-                'zx'        => $name,
-                'zxx'       => $desc,
-                'zxxx'      => $price,
-                'zxxxx'     => $country,
-                'zxxxxx'    => $stat,
-                'zxxxxxx'   => $cat,
-                'zxxxxxxx'  => $_SESSION['uid'],
-                'zxxxxxxxx'	=> $tags,
-                'zxxxxxxxxx' => $image
-            ));
+            // $stmt->execute(array(
+            //     'zx'        => $name,
+            //     'zxx'       => $desc,
+            //     'zxxx'      => $price,
+            //     'zxxxx'     => $country,
+            //     'zxxxxx'    => $stat,
+            //     'zxxxxxx'   => $cat,
+            //     'zxxxxxxx'  => $_SESSION['uid'],
+            //     'zxxxxxxxx'	=> $tags,
+            //     'zxxxxxxxxx' => image
+            // ));
 
+            $stmt->execute(array(
+                'zx'        	=> $name,
+                'zxx'       	=> $desc,
+                'zxxx'      	=> $price,
+                'zxxxx'     	=> $country,
+                'zxxxxx'    	=> $stat,
+                'zxxxxxx'   	=> $cat,
+                'zxxxxxxx'  	=> $_SESSION['uid'],
+                'zxxxxxxxx'		=> $tags,
+                'zxxxxxxxxx' 	=> $allImage
+            ));
             header("location:newad.php") ;  
 	}
 }
@@ -150,8 +192,10 @@ if(isset($_SESSION["user"])){
 		                    <div class="form-group row">
 		                        <label for="inputFullname" class="col-sm-2 col-form-label"><strong>Avatar</strong></label>
 		                        <div class="col-sm-10">
-		                          <input required type="file" class="form-control col-sm-10 float-right" id="inputFullname" name="image" placeholder="">
-		                        </div>
+									<input required type="file" name="image[]" class="form-control col-sm-10 float-right" id="inputFullname" placeholder="" multiple>
+                        		</div>
+								  <!-- <input required type="file" class="form-control col-sm-10 float-right" id="inputFullname" name="image[]" placeholder="">
+								  <input required type="file" class="form-control col-sm-10 float-right" id="inputFullname" name="image[]" placeholder=""> -->
 		                    </div>   
 							<div class="form-group row">
 							    <label for="inputUsername" class="col-sm-2 col-form-label"><strong>Item Country</strong></label>
@@ -168,7 +212,7 @@ if(isset($_SESSION["user"])){
 							<div class="form-group row">
 							    <label for="inputUsername" class="col-sm-2 col-form-label"><strong>Item Status</strong></label>
 							    <div class="col-sm-10">
-							        <select name="status" class="form-control offset-sm-2 col-sm-10">
+							        <select name="status" class="form-control col-sm-10">
 							            <option value="0">...</option>
 							            <option value="1">New</option>
 							            <option value="2">Like New</option>
@@ -192,7 +236,7 @@ if(isset($_SESSION["user"])){
 							<div class="form-group row">
 							    <label for="inputUsername" class="col-sm-2 col-form-label"><strong>Category</strong></label>
 							    <div class="col-sm-10">
-							        <select name="category" class="form-control offset-sm-2 col-sm-10">
+							        <select name="category" class="form-control col-sm-10">
 							            <option value="0">...</option>
 							        <?php
 							            

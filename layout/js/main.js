@@ -41,4 +41,7 @@ $(document).ready(function(){
         });
     }
     */
+    // $('.carousel').carousel()
+    var myCarousel = document.querySelector('#myCarousel')
+var carousel = new bootstrap.Carousel(myCarousel)
 });

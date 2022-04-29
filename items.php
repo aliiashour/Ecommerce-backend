@@ -1,5 +1,4 @@
-
-<?php 
+<?php 	
 
 	
 	ob_start() ;
@@ -10,7 +9,7 @@
 	include 'init.php' ; 
 	// Check Items Id
 
-    $item_id 	= isset($_GET["id"]) && is_numeric($_GET["id"]) ? intval($_GET["id"]) : 0 ;  
+    $item_id 	= isset($_GET["item_id"]) && is_numeric($_GET["item_id"]) ? intval($_GET["item_id"]) : 0 ;  
     $stmt 		= $con -> prepare(" SELECT 
 										items.*, userName As publisher, userId As userId, categores.name AS category ,categores.id AS catId 
 									FROM 
@@ -32,28 +31,70 @@
     
         $item = $stmt->fetch() ;
 ?>
-
-
     <h2 class="h1 text-center"> <?php echo $item["item_name"] ; ?> </h2>  
     <div class="container">
-    	<div class="row">
-    		<div class="col-md-3">
-                <?php 
+        <div class="row justify-content-left">
+    		<div class="col-md-4">
+                <div class="card item-box">
 
+                    <?php 
+                        $img_arr = explode('/',$item["image"]);
+                        if(!empty($img_arr)){
+                            if(isset($_GET["item_id"]) && $_GET["item_id"] !='' && count($img_arr) > 1){
+                    ?>
+                                <!--  -->
+                                <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false" data-bs-interval="false">
+                                    <!-- Indicators -->
+                                    <!-- Wrapper for slides -->
+                                    <div class="carousel-inner">
+                                        <?php
+                                            $counter = 0 ; 
+                                            foreach ($img_arr as $i){
+                                                // echo $counter+1 ; 
+                                                $output ='' ; 
+                                                if($counter == 0){
+                                                    $output .= '<div class="carousel-item active">' ; 
+                                                    $output .=      '<div class="img-container">' ; 
+                                                    $output .=          '<img src="admin\upload\images\\'.$i.'" class="d-block w-100 img-fluid" alt="pro-photo">' ; 
+                                                    $output .=      '</div>' ; 
+                                                    $output .= '</div>' ; 
+                                                }else{
+                                                    $output .= '<div class="carousel-item">' ; 
+                                                    $output .=      '<div class="img-container">' ; 
+                                                    $output .=          '<img src="admin\upload\images\\'.$i.'" class="d-block w-100 img-fluid" alt="pro-photo">' ; 
+                                                    $output .=      '</div>' ; 
+                                                    $output .= '</div>' ; 
+                                                }
+                                                echo $output ; 
+                                                $counter++ ; 
+                                            }
+                                        ?>
+                                    </div>
 
-                    if($item["image"] !=''){
-                        echo '<img src="admin\upload\images\\' . $item["image"] . '" class="img-fluid">'  ;
-                    }else{
-                        echo '<img src="admin\upload\images\const.jpg" class="img-fluid">'  ;
-                    }
+                                    <!-- Controls -->
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                                <div><strong><code>multi photos supported</code></strong></div>
+                            <?php
+                            }else{
+                                echo '<img src="admin\upload\images\\' . $img_arr[0] . '" class="img-fluid" alt="pro-photo">';
+                                echo "<div><strong><code>multi photos don't supported</code></strong></div>";
+                            }
 
-
-                ?>
-
-
-  
-    		</div>
-    		<div class="col-md-9 pies">
+                        }else{
+                            echo '<img src="admin\upload\images\constad.jpg" class="img-fluid" alt="const-pro">'  ;
+                        }
+                    ?>
+                </div>
+            </div>
+    		<div class="col-md-8 pies">
 
     			<h3><?php echo $item["item_name"]?></h3>
     			
@@ -111,7 +152,7 @@
 
             if(isset($_SESSION['user'])){ ?>
             
-                <form class="formcomment" action="<?php echo $_SERVER['PHP_SELF'] . '?id=' . $item['item_id'] ; ?>" method="POST">
+                <form class="formcomment" action="<?php echo $_SERVER['PHP_SELF'] . '?item_id=' . $item['item_id'] ; ?>" method="POST">
                     
                     <div class="form-group">
                         <textarea name="comment" rows="6" cols="40" class="form-control" placeholder="Enter Your Comment . . . ." required></textarea>
@@ -226,3 +267,4 @@
 	
 	
 	ob_end_flush()  ;
+?>
