@@ -4,7 +4,7 @@
     if(isset($_POST['type']) && $_POST['type']=='ajax'){
     
         if(time() - $_SESSION["LAST_ACTIVE_TIME"] > 10){        
-            echo "logout";
+            echo 'logout';
         }
 
     }else{
