@@ -21,6 +21,10 @@ A list of technologies used within the project:
 To run this project in your local machine, watch this short youtube video first
 * [download XAMPP](https://youtu.be/6rAA3FDYh6I) 
 * note:after watching this video and downloading the XAMPP, Run your Apache and MySql
+* now in the datbase PHPMyAdmin use the uploaded file code(databaseCodes.txt) to write in it 
+ ```
+* Imporatnt note:Assigne (shop) name to your database
+```
 ```
 $ git clone git@github.com:aliiashour/Ecommerce-backend.git
 $ download it in the xampp/htdocs folder(regarding to the video i upload it's link)
