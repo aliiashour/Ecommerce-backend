@@ -1,5 +1,4 @@
 # E-Commerce-backend NATIVE-PHP site
-***
 An educational project for me, to learn building PHP websites
 
 ## Table of Contents
