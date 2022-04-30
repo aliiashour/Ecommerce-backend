@@ -69,7 +69,7 @@ if(isset($_SESSION["adminId"])){
                                     foreach($data as $row){?>
 
                                         <li><?php echo $row["userName"] ?>
-                                        <a class="btn btn-warning btn-md float-right" href="members.php?do=Edit&adminId=<?php echo $row["userId"]?>"><i class="fa fa-edit"></i>Edit</a>
+                                        <a class="btn btn-warning btn-md float-right" href="members.php?do=Edit&adminId=<?php echo $row["userId"]?>"><i class="fa fa-edit"></i></a>
                                         <?php  if(checkApporov($row["userId"])){?>
 
                                                     <a class="btn btn-info btn-md float-right" href="members.php?do=Pending&mod=<?php echo $row["userId"]?>&b=Dash"><i class="fa fa-check"></i> Activate</a>
@@ -98,10 +98,10 @@ if(isset($_SESSION["adminId"])){
                                     foreach($data2 as $row){?>
 
                                         <li><?php echo $row["item_name"] ?>
-                                        <a class="btn btn-warning btn-md float-right" href="items.php?do=Edit&item_id=<?php echo $row["item_id"]?>"><i class="fa fa-edit"></i>Edit</a>
+                                        <a class="btn btn-warning btn-md float-right" href="items.php?do=Edit&item_id=<?php echo $row["item_id"]?>"><i class="fa fa-edit"></i></a>
                                         <?php  if($row["apporove"] == 0){ ?>
 
-                                                    <a class="btn btn-info btn-md float-right confirm" href="items.php?do=Approve&item_id=<?php echo $row["item_id"]?>&dashbord=yes"><i class="fa fa-check"></i> Activate</a>
+                                                    <a class="btn btn-info btn-md float-right confirm" href="items.php?do=Approve&item_id=<?php echo $row["item_id"]?>&dashbord=yes"><i class="fa fa-check"></i></a>
 
                                     <?php } 
                                         echo '</li>' ; 
@@ -132,10 +132,10 @@ if(isset($_SESSION["adminId"])){
                             ?>
 
                                         <li><?php echo $com["userName"] ; echo ': <span>' . $com["comment"] . '</span>' ; ?>
-                                        <a class="btn btn-warning btn-md float-right" href="comments.php?do=Edit&comId=<?php echo $com["c_id"]?>"><i class="fa fa-edit"></i>Edit</a>
+                                        <a class="btn btn-warning btn-md float-right" href="comments.php?do=Edit&comId=<?php echo $com["c_id"]?>"><i class="fa fa-edit"></i></a>
                                         <?php  if($com["c_status"] == 0){ ?>
 
-                                                    <a class="btn btn-info btn-md float-right confirm" href="comments.php?do=Approve&comId=<?php echo $com["c_id"]?>&b=dashbord.php"><i class="fa fa-check"></i> Activate</a>
+                                                    <a class="btn btn-info btn-md float-right confirm" href="comments.php?do=Approve&comId=<?php echo $com["c_id"]?>&b=dashbord.php"><i class="fa fa-check"></i></a>
 
                                         <?php } 
                                         echo '</li>' ;  

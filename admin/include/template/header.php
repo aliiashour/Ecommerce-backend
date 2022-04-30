@@ -11,6 +11,7 @@
         </title>
         <link rel="stylesheet" href="<?php echo $css ?>all.min.css">
         <link rel="stylesheet" href="<?php echo $css ?>fontawesome.min.css">
+        <link rel="stylesheet" href="<?php echo $css ?>bootstrap5.min.css">
         <link rel="stylesheet" href="<?php echo $css ?>bootstrap.min.css">
         <link rel="stylesheet" href="<?php echo $css ?>style.css">
     </head>

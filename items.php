@@ -31,9 +31,9 @@
     
         $item = $stmt->fetch() ;
 ?>
-    <h2 class="h1 text-center"> <?php echo $item["item_name"] ; ?> </h2>  
+    <h2 class="h1 text-center"> <?php echo $item["item_name"].' Product' ; ?> </h2>  
     <div class="container">
-        <div class="row justify-content-left">
+        <div class="row">
     		<div class="col-md-4">
                 <div class="card item-box">
 
@@ -99,24 +99,89 @@
     			<h3><?php echo $item["item_name"]?></h3>
     			
     			<ul class="list-unstyled">
-	    			<li><span>Item Description</span>: <?php echo $item["item_desc"]?></li>
-	    			<li><span>Item Price</span>: <?php echo $item["price"]?></li>
-	    			<li><span>Item Country</span>: <?php echo $item["country"]?></li>
-	    			<li><span>Item Rating </span>: <?php echo $item["rating"]?></li>
-	    			<li><span>Item Status </span>: 
-                        <?php 
-                            if($item["status"] == 1){
-                                echo 'New' ; 
-                            }elseif($item["status"] == 2){
-                                echo 'Like New' ; 
-                            }elseif($item["status"] == 3){
-                                echo 'Used' ; 
-                            }elseif($item["status"] == 4){
-                                echo 'Old' ; 
-                            }elseif($item["status"] == 5){
-                                    echo 'VeryfOld' ; 
-                            }
-                        ?>
+	    			<li>
+                        <div class="row">
+                            <div class="col-sm-4 d-inline-block">
+                                Item Description
+                                <span>
+                                    :
+                                </span>
+                            </div>
+                            <div class="col-sm-8 d-inline-block <?php if(strlen($item["item_desc"]) > 64){ echo 'text-truncate' ;} ?> desc">
+                                <?php echo $item["item_desc"]?>
+                            </div>
+                        </div>
+                    </li>
+
+
+
+	    			<li>
+                        <div class="row">
+                            <div class="col-sm-4 d-inline-block">
+                                Item Price
+                                <span>
+                                    :
+                                </span>
+                            </div>
+
+                            <div class="col-sm-8 d-inline-block">
+                                <?php echo $item["price"]?>  
+                            </div>
+                        </div>
+                    </li>
+	    			<li>
+                        <div class="row">
+                            <div class="col-sm-4 d-inline-block">
+                                Item Country
+                                <span>
+                                    :
+                                </span>
+                            </div>
+
+                            <div class="col-sm-8 d-inline-block">
+                                <?php echo $item["country"]?>  
+                            </div>
+                        </div>
+                    </li>
+	    			<li>
+                        <div class="row">
+                            <div class="col-sm-4 d-inline-block">
+                                Item Rating
+                                <span>
+                                    :
+                                </span>
+                            </div>
+
+                            <div class="col-sm-8 d-inline-block">
+                                <?php echo $item["rating"]?>  
+                            </div>
+                        </div>
+                    </li>
+	    			<li>
+                        <div class="row">
+                            <div class="col-sm-4 d-inline-block">
+                                Item Status
+                                <span>
+                                    :
+                                </span>
+                            </div>
+
+                            <div class="col-sm-8 d-inline-block">
+                                <?php 
+                                    if($item["status"] == 1){
+                                        echo 'New' ; 
+                                    }elseif($item["status"] == 2){
+                                        echo 'Like New' ; 
+                                    }elseif($item["status"] == 3){
+                                        echo 'Used' ; 
+                                    }elseif($item["status"] == 4){
+                                        echo 'Old' ; 
+                                    }elseif($item["status"] == 5){
+                                            echo 'VeryOld' ; 
+                                    }
+                                ?>
+                            </div>
+                        </div>
                     </li>
                     <?php
                     if(isset($_SESSION["user"])&& strtolower($_SESSION["user"]) != strtolower($item["publisher"])){
@@ -130,16 +195,53 @@
                         $qq = '?guest=true&publisher='.$item["publisher"] .'' ; 
                     }
                     ?>
-	    			<li><span>Item Category</span>: <a href="categores.php?pageId=<?php echo $item['catId'] ; ?>"><?php echo $item["category"]?></a></li>
-	    			<li><span>Item Publisher</span>: <a href="profile.php<?php echo $qq; ?>"><?php echo $item["publisher"]?></a></li>
-                    <li><span>Tags</span>:
-                        <?php 
-                            $tags = explode(',', $item["item_tags"]);
-                            foreach ($tags as $tag) {
-                                $tag = str_replace(' ', '', $tag) ; 
-                                echo '<span class="tag"><a href="tags.php?name=' . $tag . '">' . $tag . '</a></span>' ; 
-                            }
-                        ?>
+	    			<li>
+                        <div class="row">
+                            <div class="col-sm-4 d-inline-block">
+                                Item Category
+                                <span>
+                                    :
+                                </span>
+                            </div>
+
+                            <div class="col-sm-8 d-inline-block">
+                                <a href="categores.php?pageId=<?php echo $item['catId'] ; ?>"><?php echo $item["category"]?></a>
+                            </div>
+                        </div>
+                    </li>
+	    			<li>
+                        <div class="row">
+                            <div class="col-sm-4 d-inline-block">
+                                Item Publisher
+                                <span>
+                                    :
+                                </span>
+                            </div>
+
+                            <div class="col-sm-8 d-inline-block">
+                                <a href="profile.php<?php echo $qq; ?>"><?php echo $item["publisher"]?></a>
+                            </div>
+                        </div>
+                    </li>
+	    			<li>
+                        <div class="row">
+                            <div class="col-sm-4 d-inline-block">
+                                Tags
+                                <span>
+                                    :
+                                </span>
+                            </div>
+
+                            <div class="col-sm-8 d-inline-block">
+                                <?php 
+                                    $tags = explode(',', $item["item_tags"]);
+                                    foreach ($tags as $tag) {
+                                        $tag = str_replace(' ', '', $tag) ; 
+                                        echo '<span class="tag"><a href="tags.php?name=' . $tag . '">' . $tag . '</a></span>' ; 
+                                    }
+                                ?>
+                            </div>
+                        </div>
                     </li>
     			</ul>
     		
@@ -157,9 +259,13 @@
                     <div class="form-group">
                         <textarea name="comment" rows="6" cols="40" class="form-control" placeholder="Enter Your Comment . . . ." required></textarea>
                     </div>
-                    
+                    <div class="mb-3">
+                        <label for="forRate" class="form-label">Rate</label>
+                        <input type="text" class="form-control" id="forRate" name="rate" placeholder="Your Rate Regarding This Item is.." >
+                    </div>
+                                        
                     <div class="form-group bt">
-                        <input class="btn btn-success btn-sm float-right" type="submit" name="submit" value="Comment" />
+                        <input class="btn btn-success btn-sm float-right" type="submit" name="submit" value="submit" />
                     </div>
 
                 </form>
@@ -170,9 +276,13 @@
                 $errors = array() ; 
 
                 if( $_SERVER['REQUEST_METHOD'] == 'POST'){
+                    $rate = 0 ; 
                     $comment = filter_var($_POST["comment"], FILTER_SANITIZE_STRING) ; 
+                    $rate = filter_var($_POST["rate"], FILTER_SANITIZE_NUMBER_FLOAT) ; 
                     if($comment == '' || strlen($comment) < 11){
                         $errors[] = '<div class="alert alert-danger text-center">Please, Fill The Textarea Before Send Comment or Comment Should Be More Than 10 Characters</div>' ; 
+                    }if($rate < 0){
+                        $errors[] = '<div class="alert alert-danger text-center">Please, Enter an integer Value greater >= 0 </div>' ; 
                     }
                     if(empty($errors)){
 
@@ -181,12 +291,23 @@
                         $stmt = $con->prepare("SELECT * FROM users WHERE userName = ?");
                         $stmt -> execute(array($user)) ;   
                         $info = $stmt -> fetch() ; 
+
+                        $stmt = $con->prepare("SELECT rating FROM items WHERE item_id = ?");
+                        $stmt -> execute(array($item_id )) ;   
+                        $item_info = $stmt -> fetch() ; 
                         //end getting
                         $stmt = $con->prepare("INSERT INTO comments(comment, item_id, user_id) VALUES(?, ?, ?)") ;
                         $stmt->execute(array($comment, $item_id, $info['userId'])) ;
-                        echo '<div class="good text-center">Your Comment Successfully Add</div>'  ;
+
+                        $new_val = ($item_info["rating"] + $rate) / 2; 
+                        $stmt = $con->prepare("UPDATE items SET rating = '".$new_val."' WHERE item_id = ".$item_id."") ;
+                        $stmt->execute() ;
+                        echo '<div class="good text-center">Your responce Successfully Add</div>'  ;
                     }else{
-                        echo $errors[0] ; 
+
+                        foreach ($errors as $error) {
+                            echo $error ; 
+                        }
                     }
                 }
 
@@ -195,62 +316,68 @@
             }
         ?>
         <hr class="cutom-row">
-    	<div class="commenter">
-    		<div class="row">
-	    		
-    			<?php 
+        <div class="row">
+            <div class="commenter">
+                    
+                    <?php 
 
-    				// Get All User Name Who Make Comment at This Item
-    				
-                    $stmt = $con->prepare(" SELECT 
-    											comments.*, userName As user 
-											FROM 
-												comments 
-											INNER JOIN 
-												users 
-											ON 
-												comments.user_id = users.userId 
-											WHERE comments.item_id = ? AND comments.c_status = 1") ;
-    				$stmt->execute(array($item_id)) ;  
+                        // Get All User Name Who Make Comment at This Item
+                        
+                        $stmt = $con->prepare(" SELECT 
+                                                    comments.*, userName As user 
+                                                FROM 
+                                                    comments 
+                                                INNER JOIN 
+                                                    users 
+                                                ON 
+                                                    comments.user_id = users.userId 
+                                                WHERE comments.item_id = ? AND comments.c_status = 1") ;
+                        $stmt->execute(array($item_id)) ;  
 
-    				$rows = $stmt->fetchAll() ;
-    				
-                    $count = $stmt->rowCount() ; 
-    				
-    				if( $count){
+                        $rows = $stmt->fetchAll() ;
+                        
+                        $count = $stmt->rowCount() ; 
+                        
+                        if( $count){
+                            echo '<ul class="list-unstyled">' ; 
+                            foreach ($rows as $row) {?>
+                                <li>
+                                    <div class="row">
+                                        <div class="user col-sm-3 d-inline-block">
+                                            <?php echo $row["user"] ; ?>
+                                        </div>
+                                        <div class="comment col-sm-9 d-inline-block">
+                                            <div class="<?php if(strlen($row["comment"]) > 152){ echo 'text-truncate' ;} ?> desc">
+                                                <?php echo $row['comment'] ; ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li><hr><?php
 
-    					foreach ($rows as $row) {
-    						echo '<div class="user col-md-3">' . $row['user'] . '</div>' ;
-    						echo '<div class="comment col-md-9">' ;
-                                echo $row['comment'] ;
-                                
+                                                /*
+                                                ==============================================================
+                                                == Check If Admins Activate This Comment 
+                                                == if the comment Activate It Will Appear
+                                                == else it Will Hidden 
+                                                == if The Comment Not Activat It Will Appear If And Only If 
+                                                == You Are The Commenter And The Comment Not Activate
+                                                ==============================================================
+                                                
 
-                                /*
-                                ==============================================================
-                                == Check If Admins Activate This Comment 
-                                == if the comment Activate It Will Appear
-                                == else it Will Hidden 
-                                == if The Comment Not Activat It Will Appear If And Only If 
-                                == You Are The Commenter And The Comment Not Activate
-                                ==============================================================
-                                
+                                                if($row["user"] == $user ){
 
-                                if($row["user"] == $user ){
-
-                                   echo '<span>UnderModeration</span>' ;  
-                                }
-                                */
-
-                            echo '</div>' ; 
-    					}
-    				}else{
-    					echo '<div class="col-md-3">There is no Users Make Comments at This Item Yet !</div>' ;
-    					echo '<div class="col-md-9">There is no Comments at This Item Yet !</div>' ;
-    				}
-    			?>
-				
-			</div>
-		</div>
+                                                echo '<span>UnderModeration</span>' ;  
+                                                }
+                                                */
+                            }
+                            echo '</ul>' ; 
+                        }else{
+                            echo '<div class="col-md-3">There is no Users Make Comments at This Item Yet !</div>' ;
+                            echo '<div class="col-md-9">There is no Comments at This Item Yet !</div>' ;
+                        }
+                    ?>
+            </div>
+        </div>
     </div>
 
 <?php

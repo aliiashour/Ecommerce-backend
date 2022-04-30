@@ -33,7 +33,6 @@
                             <div class="col-sm-6">
                                 <?php if(isset($_SESSION["user"])){ ?>
                                     <ul class="list-unstyled list float-left">
-                                        <li class="list-item"><a href="profile.php">My Profile</a></li>
                                         <li class="list-item"><a href="newad.php">NewAdd</a></li>
                                         <li class="list-item"><a href="logout.php">Exit</a></li>
                                     </ul>
@@ -95,28 +94,28 @@
                             }
 
                             // Chekc if There Is Sub Categores
-                            $subcats = getSubCats() ; 
-                            
-                            if(!empty($subcats)){
+                            if(!empty($cats)){
 
                                 echo '<li class="nav-item">'; 
                                     echo '<div class="dropdown">' ;
                                         
                                         echo '<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Sub Categores
+                                            Sub Cactegores
                                                 </button>' ;
                                         
                                         echo '  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">' ;
                                             
-                                            foreach ($subcats as $subcat) {
-                                                echo '<li><a class="dropdown-item" href="categores.php?pageId=' . $subcat['id'] . '&catName='.$subcat["name"].'"> ' . $subcat["name"] . ' </a></li>' ; 
+                                            foreach ($cats as $cat) {
+                                                echo '<strong>'.$cat["name"]. ':</strong>'; 
+                                                $subCats = getSubCatsOf($cat["id"]) ; 
+                                                foreach ($subCats as $subCat) {
+                                                    echo '<li><a class="dropdown-item" href="categores.php?pageId=' . $subCat['id'] . '&catName='.$subCat["name"].'"> ' . $subCat["name"] . ' </a></li>' ; 
+                                                }
                                             }
 
                                         echo '</ul>' ;
-
                                     echo '</div>' ;
                                 echo '</li>' ;
-
                             }
                         ?>
                     </ul>

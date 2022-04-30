@@ -37,7 +37,11 @@ $(document).ready(function(){
             }, 500);
         }) ;
     $(".categores .cat h4").click(function(){
-        $(this).next(".toggleView").slideToggle("fast") ; 
+        $(this).next(".toggleView").toggleClass("hideDescribtion") ;  
     });
     // onpress checkbox
+    
+    var myCarousel = document.querySelector('#myCarousel')
+    var carousel = new bootstrap.Carousel(myCarousel)
+
 });

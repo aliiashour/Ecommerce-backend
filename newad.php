@@ -102,8 +102,18 @@ if(isset($_SESSION["user"])){
 			echo $allImage ; 
             // $image = rand(0, 1000000) . '_' . $imageName ; 
             // move_uploaded_file($imageTmp, "admin\upload\images\\" . $image ); 
-
-
+			
+			if($stat == 1){
+				$tags .=  ', New' ; 
+			}elseif($stat == 2){
+				$tags .=  ', LikeNew' ; 
+			}elseif($stat == 3){
+				$tags .=  ', Used' ; 
+			}elseif($stat == 4){
+				$tags .=  ', Old' ; 
+			}elseif($stat == 5){
+				$tags .=  ', VeryOld' ; 
+			}
             $stmt = $con->prepare("INSERT INTO 
                                             items(item_name, item_desc, price, country, status, add_date, cat_id, member_id, item_tags, image) 
                                    VALUES(:zx, :zxx, :zxxx, :zxxxx, :zxxxxx, now(), :zxxxxxx, :zxxxxxxx, :zxxxxxxxx, :zxxxxxxxxx)") ; 
@@ -238,23 +248,28 @@ if(isset($_SESSION["user"])){
 							    <div class="col-sm-10">
 							        <select name="category" class="form-control col-sm-10">
 							            <option value="0">...</option>
-							        <?php
-							            
-							           $stmt = $con->prepare("SELECT * FROM categores Where visibilty=0") ;
-							           $stmt -> execute() ; 
-							           $rows = $stmt -> fetchAll() ;
-							           foreach($rows as $row ){
-							               echo '<option value="'.$row["id"].'">'.$row["name"].'</option>' ; 
-							           }
-							               
-							           
-							        ?> 
+										<?php
+											
+										$stmt = $con->prepare("SELECT * FROM categores Where visibilty=0 AND parent=0") ;
+										$stmt -> execute() ; 
+										$cats = $stmt -> fetchAll() ;
+										foreach($cats as $cat ){
+											echo '<optgroup label="'.$cat["name"].'">' ; 
+											$subCats = getSubCatsOf($cat["id"]) ; 
+											foreach ($subCats as $subCat) {
+													echo '<option value="'.$subCat["id"].'">'.$subCat["name"].'</option>' ; 
+												}
+										}
+											
+										
+										?> 
 							        </select>
 							    </div>
 							</div>
-							<div class="form-group row">
-							    <div class="col-sm-12">
-							      <input type="submit" class="btn btn-success float-right btn-md" value="Add Item"> 
+							<div class="form-group row justify-content-end">
+							    <div class="col-sm-2">
+							      <input type="submit" class="col-sm-12 btn btn-success float-right btn-md" value="Add Item"> 
+								  
 							    </div>
 							</div>
 						</form>

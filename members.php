@@ -38,12 +38,18 @@ if(isset($_SESSION["user"])){
             <div class="container">   
                 <div class="row">
                     <div class="col-sm-8">
-                        <form class="editform" action="?do=Update" method="POST">
+                        <form class="editform" action="?do=Update" method="POST" enctype="multipart/form-data">
                             <input type="text" name="userid" class="d-none" value="<?php echo $row["userId"]?>">
                             <div class="form-group row">
                                 <label for="inputUsername" class="col-sm-2 col-form-label"><strong><?php echo lang('USERNAME')?></strong></label>
                                 <div class="col-sm-10">
                                 <input type="text" class="form-control col-sm-10 float-right" id="inputUsername" name="username" autocomplete="off" required value="<?php echo $row['userName']?>">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputFullname" class="col-sm-2 col-form-label"><strong><?php echo lang('FULLNAME')?></strong></label>
+                                <div class="col-sm-10">
+                                <input required type="text" class="form-control col-sm-10 float-right" id="inputFullname" name="fullname" autocomplete="off" value="<?php echo $row['fullname']?>">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -60,15 +66,17 @@ if(isset($_SESSION["user"])){
                                 <input required type="email" class="form-control col-sm-10 float-right" id="inputEmail" name="email" autocomplete="off" value="<?php echo $row['email']?>">
                                 </div>
                             </div>
+		                    <div class="form-group row">
+		                        <label for="inputImage" class="col-sm-2 col-form-label"><strong>Avatar</strong></label>
+		                        <div class="col-sm-10">
+									<input type="file" name="image" class="form-control col-sm-10 float-right" id="inputImage" placeholder="">
+                        		</div>
+								  <!-- <input required type="file" class="form-control col-sm-10 float-right" id="inputFullname" name="image[]" placeholder="">
+								  <input required type="file" class="form-control col-sm-10 float-right" id="inputFullname" name="image[]" placeholder=""> -->
+		                    </div>
                             <div class="form-group row">
-                                <label for="inputFullname" class="col-sm-2 col-form-label"><strong><?php echo lang('FULLNAME')?></strong></label>
-                                <div class="col-sm-10">
-                                <input required type="text" class="form-control col-sm-10 float-right" id="inputFullname" name="fullname" autocomplete="off" value="<?php echo $row['fullname']?>">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-sm-12">
-                                        <input type="submit" class="btn btn-primary float-right btn-lg" value="<?php echo lang('SAVE')?>"> 
+                                <div class="row  justify-content-end">
+                                        <input type="submit" class="col-sm-2 btn btn-primary btn-lg" value="<?php echo lang('SAVE')?>"> 
                                     </div>
                             </div>
                         </form>
@@ -97,8 +105,40 @@ if(isset($_SESSION["user"])){
             if($_POST["username"] !="" && $_POST["email"] !="" && $_POST["fullname"] !="" && strlen($_POST["oldpassword"]) > 7){
                 $newName = $_POST["username"]  ;
                 $newEmail = $_POST["email"]  ;
-                $newFullname = $_POST["fullname"]  ;
                 $userid = $_POST["userid"] ; 
+                
+                $imageName = $_FILES["image"]["name"] ;
+                $imageTmp  = $_FILES["image"]["tmp_name"] ;
+                $imageType = $_FILES["image"]["type"] ; 
+                $imageSize = $_FILES["image"]["size"] ;
+
+                if($imageName !=''){
+        
+                    $allowedExetintion = array("jpeg", "jpg", "png", "gif") ;
+                    $errors = array() ;                     
+            
+                    $imageExtention = explode('.', $imageName) ;
+                    $imageExtention = strtolower($imageExtention[1]) ;
+                    if(!in_array($imageExtention, $allowedExetintion)){
+                        $errors[] ="<div class='alert alert-danger'>This Extention is Not <strong>Allowed</strong></div>" ;   
+                    }if($imageSize > 4194304){
+                        $errors[] ="<div class='alert alert-danger'>Image Size Can Not be More Than 4mb</div>" ; 
+                    }
+                    if(empty($errors)){
+                        $image = rand(0, 1000000) . '_' . $imageName ; 
+                        move_uploaded_file($imageTmp, "admin\upload\images\\" . $image );
+                        $stmt = $con->prepare("UPDATE users SET image = ? WHERE userId = ?") ;
+                        $stmt->execute(array($image, $userid)) ;
+                        echo '<div class="good text-center">Profile Picture successfully changed</div>' ; 
+                    }else{
+                        foreach ($errors as $error) {
+                            echo $error ; 
+                        }
+                    }
+                    
+                }
+
+                $newFullname = $_POST["fullname"]  ;
                 $pass = empty($_POST["password"]) ? $_POST["oldpassword"] : sha1($_POST["password"]) ;
                 $queryType = "update" ; 
                 if(doQuery($queryType, $newName, $newEmail, $newFullname, $pass, $userid)){

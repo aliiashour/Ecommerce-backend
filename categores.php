@@ -44,6 +44,33 @@
 
 	if(!empty($items)){ 
 		$i = 0 ; 
+			// get all cat subcategory
+			$subCats = getSubCatsOf($catId) ;
+			if(!empty($subCats)){?>
+				<div class="row">
+					<ul class="list-unstyled">
+						<li>
+							<div class="row">
+								<div class="col-sm-3 d-inline-block">
+									SubCategories
+									<span>
+										:
+									</span>
+								</div>
+
+								<div class="col-sm-8 d-inline-block">
+									<?php 
+										foreach ($subCats as $subCat) {
+											echo '<span class="tag subcat"><a href="categores.php?pageId=' . $subCat["id"] . '&catName=' . $subCat["name"] . '">' . $subCat["name"] . '</a></span>' ; 
+										}
+									?>
+								</div>
+							</div>
+						</li> 
+					</ull>
+				
+				</div><?php 
+			}
 		echo '<div class="row justify-content-left">' ;
 
 			foreach ($items as $item) {
@@ -73,7 +100,7 @@
 
 							echo '<h5 class="card-title"><a href="items.php?item_id=' . $item['item_id'] . '">' . $item['item_name'] . '</a></h5>' ; 
 
-							echo '<p class="card-text lead">' . $item['item_desc'] . '</p>' ;
+							echo '<p class="card-text text-truncate lead">' . $item['item_desc'] . '</p>' ;
 
 							echo '<span class="price">' . $item['price'] . '$</span>' ;
 							echo '<div class="card-date">' . $item['add_date'] . '</div>' ; 

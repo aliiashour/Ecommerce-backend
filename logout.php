@@ -17,7 +17,7 @@ echo "<h2 class='h1 danger-message' style='
     border-radius: 5px;'
     >You Successfully LogOut</h2>" ; 
 
-header("location:index.php ") ; 
+header("location:index.php") ; 
 exit() ; 
 
 ?>

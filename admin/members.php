@@ -55,7 +55,6 @@ if(isset($_SESSION["admin"])){
             <table class="table table-striped col-sm-12">
                 <thead>
                     <tr>
-                        <th scope="col">#ID</th>
                         <th scope="col">Avatar</th>
                         <th scope="col">Username</th>
                         <th scope="col">Fullname</th>
@@ -75,7 +74,6 @@ if(isset($_SESSION["admin"])){
 
         
                     <tr>
-                        <th scope="row"><?php echo $row["userId"] ;  ?></th>
                         <td>
                             <?php 
                                 $q = '' ; 
@@ -99,11 +97,11 @@ if(isset($_SESSION["admin"])){
                         <td><?php echo $row["fullname"] ;  ?></td>
                         <td><?php echo $row["email"] ;  ?></td>
                         <td><?php echo $row["date"] ; ?><td>
-                        <td><a class="btn btn-warning btn-md"href="?do=Edit&adminId=<?php echo $row["userId"] ;  ?>"><i class="fa fa-edit fw"></i> Edit</a>
-                        <a class="btn btn-danger btn-md confirm" href="?do=Delete&adminId=<?php echo $row["userId"] ;  ?>"><i class="fa fa-times fw confirm"></i> Delete</a>
+                        <td><a class="btn btn-warning btn-md"href="?do=Edit&adminId=<?php echo $row["userId"] ;  ?>"><i class="fa fa-edit fw"></i></a>
+                        <a class="btn btn-danger btn-md confirm" href="?do=Delete&adminId=<?php echo $row["userId"] ;  ?>"><i class="fa fa-times fw confirm"></i></a>
                         <?php
                             if(checkApporov($row["userId"])){?>
-                                <a class="btn btn-info btn-md confirm" href="?do=Pending&mod=<?php echo $row["userId"] ;  ?>&b=Mange"><i class="fa fa-check fw conform"></i> Activate</a>
+                                <a class="btn btn-info btn-md confirm" href="?do=Pending&mod=<?php echo $row["userId"] ;  ?>&b=Mange"><i class="fa fa-check fw conform"></i></a>
                             <?php }?>
                         </td>
                     </tr>
@@ -124,7 +122,6 @@ if(isset($_SESSION["admin"])){
                         <div class="float-right">
                             <a class='btn btn-primary btn-lg' style='margin-bottom:20px' href='?do=Add'>
                                 <i class='fa fa-plus'></i> 
-                                Add member
                             </a>
                         </div>
                     </div>
@@ -192,13 +189,13 @@ if(isset($_SESSION["admin"])){
                     </div>
 
                     <!-- START UPLOAD FILES AND image   -->
-                    
+<!--                     
                     <div class="form-group row">
                         <label for="inputFullname" class="col-sm-2 col-form-label"><strong>Avatar</strong></label>
                         <div class="col-sm-10">
                           <input required type="file" class="form-control col-sm-10 float-right" id="inputFullname" name="image" placeholder="">
                         </div>
-                    </div>
+                    </div> -->
                     <div class="form-group row">
                         <div class="col-sm-12">
                           <input type="submit" class="btn btn-success float-right btn-lg" value="<?php echo lang('ADDONLY')?>"> 
@@ -217,18 +214,18 @@ if(isset($_SESSION["admin"])){
 
             // Get Uploded File Info
 
-            $imageName = $_FILES["image"]["name"] ;
-            $imageTmp  = $_FILES["image"]["tmp_name"] ;
-            $imageType = $_FILES["image"]["type"] ; 
-            $imageSize = $_FILES["image"]["size"] ;
+            // $imageName = $_FILES["image"]["name"] ;
+            // $imageTmp  = $_FILES["image"]["tmp_name"] ;
+            // $imageType = $_FILES["image"]["type"] ; 
+            // $imageSize = $_FILES["image"]["size"] ;
 
             // Exetinstion Allowed To Upload
 
-            $allowedExetintion = array("jpeg", "jpg", "png", "gif") ;
+            // $allowedExetintion = array("jpeg", "jpg", "png", "gif") ;
 
-            $imageExtention = explode('.', $imageName) ;
+            // $imageExtention = explode('.', $imageName) ;
             
-            $imageExtention = strtolower($imageExtention[1]) ; 
+            // $imageExtention = strtolower($imageExtention[1]) ; 
             
 
             $newName        = $_POST["username"]  ;
@@ -250,26 +247,27 @@ if(isset($_SESSION["admin"])){
             }
             if(empty($pass) || strlen($unhashpass) < 7){
                 $AddErrors[] ="<div class='alert alert-danger'>You Should Enter Your Password And It Should More Than 7 Characters</div>" ; 
-            }if($imageName == ''){
-                $AddErrors[] ="<div class='alert alert-danger'> Upload Your Image</div>" ;  
-            
-            }if(!in_array($imageExtention, $allowedExetintion) && !empty($imageName)){
-                $AddErrors[] ="<div class='alert alert-danger'>This Extention is Not <strong>Allowed</strong></div>" ;   
-            }if($imageSize > 4194304){
-                $AddErrors[] ="<div class='alert alert-danger'>Image Size Can Not be More Than 4mb</div>" ; 
             }
+            // if($imageName == ''){
+            //     $AddErrors[] ="<div class='alert alert-danger'> Upload Your Image</div>" ;  
+            
+            // }if(!in_array($imageExtention, $allowedExetintion) && !empty($imageName)){
+            //     $AddErrors[] ="<div class='alert alert-danger'>This Extention is Not <strong>Allowed</strong></div>" ;   
+            // }if($imageSize > 4194304){
+            //     $AddErrors[] ="<div class='alert alert-danger'>Image Size Can Not be More Than 4mb</div>" ; 
+            // }
 
             
             if(empty($AddErrors)){
 
-                $image = rand(0, 1000000) . '_' . $imageName ; 
-                move_uploaded_file($imageTmp, "upload\images\\" . $image ); 
+                // $image = rand(0, 1000000) . '_' . $imageName ; 
+                // move_uploaded_file($imageTmp, "upload\images\\" . $image ); 
 
 
 
                 $queryType = 'insert' ; 
                 
-                if(doQuery($queryType, $newName, $newEmail, $newFullname, $pass, '', $image)){
+                if(doQuery($queryType, $newName, $newEmail, $newFullname, $pass, '')){
                     echo "<h2 class='text-center h1' 
                               style='margin: 60px 0px 25px;
                                      color: #675858;'>"
@@ -344,7 +342,7 @@ if(isset($_SESSION["admin"])){
                         <div class="col-sm-10">
                           <input required type="text" class="form-control col-sm-10 float-right" id="inputFullname" name="fullname" autocomplete="off" value="<?php echo $row['fullname']?>">
                         </div>
-                    </div>
+                    </div>   
                     <div class="form-group row">
                         <div class="col-sm-12">
                           <input type="submit" class="btn btn-primary float-right btn-lg" value="<?php echo lang('SAVE')?>"> 
@@ -499,9 +497,9 @@ if(isset($_SESSION["admin"])){
                         <td><?php echo $row["fullname"] ;  ?></td>
                         <td><?php echo $row["email"] ;  ?></td>
                         <td><?php echo $row["date"] ; ?><td>
-                        <td><a class="btn btn-warning btn-md"href="?do=Edit&adminId=<?php echo $row["userId"] ;  ?>"><i class="fa fa-edit fw"></i> Edit</a></td>
-                        <td><a class="btn btn-danger btn-md confirm" href="?do=Delete&adminId=<?php echo $row["userId"] ;  ?>"><i class="fa fa-times fw confirm"></i> Delete</a></td>
-                        <td><a class="btn btn-info btn-md confirm" href="?do=Pending&mod=<?php echo $row["userId"] ;  ?>"><i class="far fa-check fw conform"></i> Activate</a></td>
+                        <td><a class="btn btn-warning btn-md"href="?do=Edit&adminId=<?php echo $row["userId"] ;  ?>"><i class="fa fa-edit fw"></i></a></td>
+                        <td><a class="btn btn-danger btn-md confirm" href="?do=Delete&adminId=<?php echo $row["userId"] ;  ?>"><i class="fa fa-times fw confirm"></i></a></td>
+                        <td><a class="btn btn-info btn-md confirm" href="?do=Pending&mod=<?php echo $row["userId"] ;  ?>"><i class="far fa-check fw conform"></i></a></td>
                     </tr>
 <?php }?>
                 </tbody>

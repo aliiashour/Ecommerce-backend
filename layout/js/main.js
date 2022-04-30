@@ -43,5 +43,15 @@ $(document).ready(function(){
     */
     // $('.carousel').carousel()
     var myCarousel = document.querySelector('#myCarousel')
-var carousel = new bootstrap.Carousel(myCarousel)
+    var carousel = new bootstrap.Carousel(myCarousel)
+
+    $(".pies ul li .text-truncate, .comment .text-truncate").on("click",function(){
+        $(this).toggleClass("text-truncate") ; 
+        // $(this).text($(this).val()) ; 
+    });
+    $(".prov-items .comm").on("click",function(){
+        $(this).toggleClass("text-truncate") ; 
+        // $(this).text($(this).val()) ; 
+    });
+    
 });
