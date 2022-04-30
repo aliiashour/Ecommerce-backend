@@ -1,20 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">
-        <title>TEST</title>
-        
-        <link rel="stylesheet" href="layout/css/all.min.css">
-        <link rel="stylesheet" href="layout/css/fontawesome.min.css">
-        <link rel="stylesheet" href="layout/css/bootstrap.min.css">
-        <link rel="stylesheet" href="layout/css/style.css">
-    </head>
-    <body>
-        <div class="container">
-            <div class="row justify-content-end">
-                <div class="col-sm-8 pies">    
-                    <ul class="list-unstyled">
-                        <li>
+        <met<li>
                             <div class="row">
 <!--                                 
                                 <div class="col-sm-4 d-inline-block text-start">
