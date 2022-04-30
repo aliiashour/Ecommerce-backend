@@ -44,12 +44,12 @@ if(isset($_SESSION["adminId"])){
                 <table class="table table-striped col-sm-12">
                     <thead>
                         <tr>
-                            <th scope="col">#ID</th>
-                            <th scope="col">comment</th>
-                            <th scope="col">Date</th>
+                            <!-- <th scope="col">#ID</th>
+                            <th scope="col">comment</th> -->
                             <th scope="col">Item Name</th>
                             <th scope="col">User Name</th>
-                            <th scope="col" colspan="3" class="text-center">Controle</th>
+                            <th scope="col">Date</th>
+                            <th scope="col"class="text-center">Controle</th>
                         </tr>
                     </thead>
                 <tbody>
@@ -63,9 +63,6 @@ if(isset($_SESSION["adminId"])){
 
 
                         <tr>
-                            <th scope="row"><?php echo $row["c_id"] ;  ?></th>
-                            <td><?php echo $row["comment"] ;  ?></td>
-                            <td><?php echo $row["c_date"] ;  ?></td>
                             <!-- <a href="../items.php?item_id='.$row["item_id"].'"> -->
                             <td><a href="../items.php?item_id=<?php echo $row["item_id"] ; ?>"><?php echo $row["item_name"] ; ?></a></td>
                             <?php
@@ -77,12 +74,17 @@ if(isset($_SESSION["adminId"])){
                                     $q = '?publisher='.$row["userName"] ;
                                 }
                             ?>
-                            <td><a href="../profile.php<?php echo $q ; ?>"><?php echo $row["userName"] ;?></a><td>
-                            <td><a class="btn btn-warning btn-md"href="?do=Edit&comId=<?php echo $row["c_id"] ;  ?>"><i class="fa fa-edit fw"></i> Edit</a>
-                            <a class="btn btn-danger btn-md confirm" href="?do=Delete&comId=<?php echo $row["c_id"] ;  ?>"><i class="fa fa-times fw confirm"></i> Delete</a>
+                            <td>
+                                <a href="../profile.php<?php echo $q ; ?>">
+                                    <?php echo $row["userName"] ;?>
+                                </a>
+                            </td>
+                            <td><?php echo $row["c_date"] ;?></td>
+                            <td><a class="btn btn-warning btn-md"href="?do=Edit&comId=<?php echo $row["c_id"] ;  ?>"><i class="fa fa-edit fw"></i></a>
+                            <a class="btn btn-danger btn-md confirm" href="?do=Delete&comId=<?php echo $row["c_id"] ;  ?>"><i class="fa fa-times fw confirm"></i></a>
                             <?php
                                 if($row["c_status"] == 0 ){?>
-                                    <a class="btn btn-info btn-md confirm" href="?do=Approve&comId=<?php echo $row["c_id"] ;  ?>&b=?do=Mange"><i class="fa fa-check fw conform"></i> Approve</a>
+                                    <a class="btn btn-info btn-md confirm" href="?do=Approve&comId=<?php echo $row["c_id"] ;  ?>&b=?do=Mange"><i class="fa fa-check fw conform"></i></a>
                                 <?php }?>
                             </td>
                         </tr>
@@ -202,7 +204,7 @@ if(isset($_SESSION["adminId"])){
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                          <input type="submit" class="btn btn-danger float-right btn-md" value="Update Comment"> 
+                          <input type="submit" class="btn btn-danger float-right btn-md" value="Update"> 
                         </div>
                     </div>
                 </form>
@@ -241,7 +243,7 @@ if(isset($_SESSION["adminId"])){
                 }
                 echo "</div>" ;
                 echo '<div class="text-center" style="margin-top:50px"><a class="btn btn-danger btn-lg" 
-                     style="" href="?do=Edit&item_id='.$comId.'"><i class="fa fa-angle-double-left"></i> Backc</a></div>' ;
+                     style="" href="?do=Edit&item_id='.$comId.'"><i class="fa fa-angle-double-left"></i></a></div>' ;
             }
 
         }else{

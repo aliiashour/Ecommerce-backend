@@ -48,10 +48,8 @@
                 <table class="table table-striped col-sm-12">
                     <thead>
                         <tr>
-                            <th scope="col">#ID</th>
                             <th scope="col">Photo</th>
                             <th scope="col">Name</th>
-                            <th scope="col">Description</th>
                             <th scope="col">Price</th>
                             <th scope="col">Registerd Date</th>
                             <th scope="col">Country</th>
@@ -73,7 +71,6 @@
 
 
                         <tr>
-                            <th scope="row"><?php echo $row["item_id"] ;  ?></th>
                             <td>
                                 <?php 
     /////////////////////.//////////////////////////////////////////
@@ -95,7 +92,6 @@
                                     
                             </td>
                             <td><?php echo $row["item_name"] ;  ?></td>
-                            <td><?php echo $row["item_desc"] ;  ?></td>
                             <td><?php echo $row["price"] ;  ?></td>
                             <td><?php echo $row["add_date"] ; ?></td>
                             <td><?php echo $row["country"] ; ?></td>
@@ -126,9 +122,9 @@
                             <td><a href="../profile.php<?php echo $q ; ?>"><?php echo $row["publisher"] ; ?></a></td>
                             <!-- categores.php?pageId=26&catName=clothes -->
                             <td><a href="../categores.php?pageId=<?php echo $row["cat_id"] ; ?>&catName=<?php echo $row["category"] ; ?>"><?php echo $row["category"] ; ?></a></td>
-                            <td><a class="btn btn-warning btn-md"href="?do=Edit&item_id=<?php echo $row["item_id"] ;  ?>"><i class="fa fa-edit fw"></i> Edit</a>
-                            <a class="btn btn-danger btn-md confirm" href="?do=Delete&item_id=<?php echo $row["item_id"] ;  ?>"><i class="fa fa-times fw confirm"></i> Delete</a>
-                                <?php if( $row["apporove"] == 0 ){ echo '<a class="btn btn-info btn-md confirm" href="?do=Approve&item_id='.$row["item_id"].'"><i class="fa fa-check fw"></i> Activate</a>'; } ?>
+                            <td><a class="btn btn-warning btn-md"href="?do=Edit&item_id=<?php echo $row["item_id"] ;  ?>"><i class="fa fa-edit fw"></i></a>
+                            <a class="btn btn-danger btn-md confirm" href="?do=Delete&item_id=<?php echo $row["item_id"] ;  ?>"><i class="fa fa-times fw confirm"></i></a>
+                                <?php if( $row["apporove"] == 0 ){ echo '<a class="btn btn-info btn-md confirm" href="?do=Approve&item_id='.$row["item_id"].'"><i class="fa fa-check fw"></i></a>'; } ?>
                             </td>
                         </tr>
     <?php   } ?>
@@ -147,8 +143,7 @@
                     <div class='col-sm-12'>
                         <div class="float-right">
                             <a class='btn btn-primary btn-lg' style='margin-bottom:20px' href='?do=Add'>
-                                <i class='fa fa-plus'></i> 
-                                Add Item
+                                <i class='fa fa-plus'></i>
                             </a>
                         </div>
                     </div>
@@ -236,9 +231,11 @@
                     <div class="form-group row">
                         <label for="inputFullname" class="col-sm-2 col-form-label"><strong>Avatar</strong></label>
                         <div class="col-sm-10">
-                          <input required type="file" class="form-control col-sm-10 float-right" id="inputFullname" name="image[]" placeholder="feel free to add one ore more photo" multiple>
+                            <input required type="file" name="image[]" class="form-control col-sm-10 float-right" id="inputFullname" placeholder="" multiple>
                         </div>
-                    </div>        
+                            <!-- <input required type="file" class="form-control col-sm-10 float-right" id="inputFullname" name="image[]" placeholder="">
+                            <input required type="file" class="form-control col-sm-10 float-right" id="inputFullname" name="image[]" placeholder=""> -->
+                    </div>    
                     <div class="form-group row">
                         <label for="inputUsername" class="col-sm-2 col-form-label"><strong>Item Country</strong></label>
                         <div class="col-sm-10">
@@ -280,17 +277,19 @@
                         <div class="col-sm-10">
                             <select name="category" class="form-control offset-sm-2 col-sm-10">
                                 <option value="0">...</option>
-                            <?php
-                                
-                               $stmt = $con->prepare("SELECT * FROM categores") ;
-                               $stmt -> execute() ; 
-                               $rows = $stmt -> fetchAll() ;
-                               foreach($rows as $row ){
-                                   echo '<option value="'.$row["id"].'">'.$row["name"].'</option>' ; 
-                               }
-                                   
-                               
-                            ?> 
+                                <?php
+                                    $stmt = $con->prepare("SELECT * FROM categores Where visibilty=0 AND parent=0") ;
+
+                                    $stmt -> execute() ; 
+                                    $cats = $stmt -> fetchAll() ;
+                                    foreach($cats as $cat ){
+                                        echo '<optgroup label="'.$cat["name"].'">' ; 
+                                        $subCats = getSubCatsOf($cat["id"]) ; 
+                                        foreach ($subCats as $subCat) {
+                                                echo '<option value="'.$subCat["id"].'">'.$subCat["name"].'</option>' ; 
+                                            }
+                                    } 
+                                ?> 
                             </select>
                         </div>
                     </div>                    
@@ -315,7 +314,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                          <input type="submit" class="btn btn-success float-right btn-md" value="Add Item"> 
+                          <input type="submit" class="btn btn-success float-right btn-md" value="Add"> 
                         </div>
                     </div>
                 </form>
@@ -325,8 +324,6 @@
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 
                 if($_POST["name"] !=''){
-
-
 
                     // Exetinstion Allowed To Upload
 
@@ -454,24 +451,62 @@
                 <h2 class="text-center h1">Edit Item</h2>
                 <div class="container">   
                     <div class="row">
-                        <div class="col-sm-4 float-left">
-                            <?php 
-    
-                                $img_arr = explode('/',$item["image"]);
-                                if(!empty($img_arr)){
-                                    if(isset($_GET["item_id"]) &&$_GET["item_id"] !='' && count($img_arr) > 1){
-                                        //slider ere
-                                        //print_r($img_arr) ; 
-                                        echo "SLIDER" ; 
+                        <div class="col-sm-4">
+                            <div class="card item-box">
+                                <?php 
+        
+                                    $img_arr = explode('/',$item["image"]);
+                                    if(!empty($img_arr)){
+                                        if(isset($_GET["item_id"]) &&$_GET["item_id"] !='' && count($img_arr) > 1){ ?> 
+                                            <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false" data-bs-interval="false">
+                                                <!-- Indicators -->
+                                                <!-- Wrapper for slides -->
+                                                <div class="carousel-inner">
+                                                    <?php
+                                                        $counter = 0 ; 
+                                                        foreach ($img_arr as $i){
+                                                            // echo $counter+1 ; 
+                                                            $output ='' ; 
+                                                            if($counter == 0){
+                                                                $output .= '<div class="carousel-item active">' ; 
+                                                                $output .=      '<div class="img-container">' ; 
+                                                                $output .=          '<img src="upload\images\\'.$i.'" class="d-block w-100 img-fluid" alt="pro-photo">' ; 
+                                                                $output .=      '</div>' ; 
+                                                                $output .= '</div>' ; 
+                                                            }else{
+                                                                $output .= '<div class="carousel-item">' ; 
+                                                                $output .=      '<div class="img-container">' ; 
+                                                                $output .=          '<img src="upload\images\\'.$i.'" class="d-block w-100 img-fluid" alt="pro-photo">' ; 
+                                                                $output .=      '</div>' ; 
+                                                                $output .= '</div>' ; 
+                                                            }
+                                                            echo $output ; 
+                                                            $counter++ ; 
+                                                        }
+                                                    ?>
+                                                </div>
+            
+                                                <!-- Controls -->
+                                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
+                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                    <span class="visually-hidden">Previous</span>
+                                                </button>
+                                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="next">
+                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                    <span class="visually-hidden">Next</span>
+                                                </button>
+                                            </div>
+                                            <div><strong><code>multi photos supported</code></strong></div>
+                                        <?php }else{
+                                            echo '<img src="upload\images\\' . $img_arr[0] . '" class="img-fluid" alt="pro-photo">'  ;
+                                            echo "<div><strong><code>multi photos don't supported</code></strong></div>";
+                                        }
                                     }else{
-                                        echo '<img src="upload\images\\' . $img_arr[0] . '" class="img-fluid" alt="pro-photo">'  ;
-                                        echo "<div><strong><code>multi photos don't supported</code></strong></div>";
+                                        echo '<img src="upload\images\constad.jpg" class="avatar img-fluid img-thumbnail rounded-circle" alt="const-pro">'  ;
                                     }
-                                }else{
-                                    echo '<img src="upload\images\constad.jpg" class="avatar img-fluid img-thumbnail rounded-circle" alt="const-pro">'  ;
-                                }
-                                //echo '<img src="upload\images\\' . $item["image"] . '" class="img-fluid">'  ;
-                            ?>
+                                    //echo '<img src="upload\images\\' . $item["image"] . '" class="img-fluid">'  ;
+                                ?>
+                            </div> 
                         </div> 
                         <div class="col-sm-8 float-right">
                             <form class="editform" action="?do=Update" method="POST" enctype="multipart/form-data">
@@ -488,13 +523,15 @@
                                             placeholder="Enter Item Name" 
                                             value="<?php echo $item["item_name"]?>"/>
                                     </div>
-                                </div> 
+                                </div>
+
                                 <div class="form-group row">
                                     <label for="inputUsername" class="col-sm-2 col-form-label"><strong>Avatar</strong></label>
                                     <div class="col-sm-10">
-                                    <input required type="file" class="form-control col-sm-10 float-right" id="inputUsername" name="image" value="sdfghj">
+                                    <input required type="file" class="form-control col-sm-10 float-right" id="inputUsername" name="image[]" value="" multiple>
                                     </div>
                                 </div>                    
+
                                 <div class="form-group row">
                                     <label for="inputUsername" class="col-sm-2 col-form-label"><strong>Item Desc</strong></label>
                                     <div class="col-sm-10">
@@ -600,7 +637,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-12">
-                                    <input type="submit" class="btn btn-danger float-right btn-md" value="Update Item"> 
+                                        <input type="submit" class="btn btn-danger float-right btn-md" value="Update"> 
                                     </div>
                                 </div>
                             </form>
@@ -654,11 +691,11 @@
                                             <td><?php echo $row["comment"] ;  ?></td>
                                             <td><?php echo $row["c_date"] ;  ?></td>
                                             <td><?php echo $row["userName"] ; ?><td>
-                                            <td><a class="btn btn-warning btn-md"href="comments.php?do=Edit&comId=<?php echo $row["c_id"] ;  ?>"><i class="fa fa-edit fw"></i> Edit</a>
-                                            <a class="btn btn-danger btn-md confirm" href="comments.php?do=Delete&comId=<?php echo $row["c_id"] ;  ?>"><i class="fa fa-times fw confirm"></i> Delete</a>
+                                            <td><a class="btn btn-warning btn-md"href="comments.php?do=Edit&comId=<?php echo $row["c_id"] ;  ?>"><i class="fa fa-edit fw"></i></a>
+                                            <a class="btn btn-danger btn-md confirm" href="comments.php?do=Delete&comId=<?php echo $row["c_id"] ;  ?>"><i class="fa fa-times fw confirm"></i></a>
                                             <?php
                                                 if($row["c_status"] == 0 ){?>
-                                                    <a class="btn btn-info btn-md confirm" href="comments.php?do=Approve&comId=<?php echo $row["c_id"] ;  ?>&b=?do=Mange"><i class="fa fa-check fw conform"></i> Approve</a>
+                                                    <a class="btn btn-info btn-md confirm" href="comments.php?do=Approve&comId=<?php echo $row["c_id"] ;  ?>&b=?do=Mange"><i class="fa fa-check fw conform"></i></a>
                                                 <?php }?>
                                             </td>
                                         </tr>
@@ -684,6 +721,9 @@
                 redirect($errMes, $errTime, $page, $url) ;
             }
         }elseif ($do == "Update"){
+        
+            $allowedExetintion = array("jpeg", "jpg", "png", "gif") ;
+            $errors = array() ; 
             echo '<h2 class="text-center h1">Update Items</h2>' ;
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $itemId = $_POST["itemId"] ;
@@ -695,20 +735,6 @@
                 $category       = $_POST["category"] ;
                 $member         = $_POST["member"] ;
                 $tags           = $_POST["tags"] ; 
-
-
-                $imageName = $_FILES["image"]["name"] ;
-                $imageTmp  = $_FILES["image"]["tmp_name"] ;
-                $imageType = $_FILES["image"]["type"] ; 
-                $imageSize = $_FILES["image"]["size"] ;
-                
-
-                $allowedExetintion = array("jpeg", "jpg", "png", "gif") ;
-
-                $imageExtention = explode('.', $imageName) ;
-                
-                $imageExtention = strtolower($imageExtention[1]) ; 
-        
 
                 $errors = [] ; 
                 if(empty($itemName) || strlen($itemName) < 3){
@@ -723,18 +749,66 @@
                 if(empty($country) || strlen($country) < 4){
                     $errors[] ="<div class='alert alert-danger'>You Should Enter Your Country And It Should More Than 4 Characters</div>" ; 
                 }
-                if(!in_array($imageExtention, $allowedExetintion) && !empty($imageName)){
-                    $errors[] ="<div class='alert alert-danger'>This Extention is Not <strong>Allowed</strong></div>" ;   
-                }if($imageSize > 4194304){
-                    $errors[] ="<div class='alert alert-danger'>Image Size Can Not be More Than 4mb</div>" ; 
+                $image='' ; 
+                $allImage='' ; 
+                $ii= 0 ;
+                foreach($_FILES["image"]["tmp_name"] as $key => $value){
+                    $imageName = $_FILES["image"]["name"][$key] ;
+                    $imageTmp  = $_FILES["image"]["tmp_name"][$key] ;
+                    $imageType = $_FILES["image"]["type"][$key] ; 
+                    $imageSize = $_FILES["image"]["size"][$key] ;
+                    
+            
+                    $imageExtention = explode('.', $imageName) ;
+                    
+                    $imageExtention = strtolower($imageExtention[1]) ; 
+                    if($imageName == ''){
+                        $errors[] ="<div class='alert alert-danger'> Upload Your Image</div>" ;  
+                    
+                    }if(!in_array($imageExtention, $allowedExetintion) && !empty($imageName)){
+                        $errors[] ="<div class='alert alert-danger'>This Extention is Not <strong>Allowed</strong></div>" ;   
+                    }if($imageSize > 4194304){
+                        $errors[] ="<div class='alert alert-danger'>Image Size Can Not be More Than 4mb</div>" ; 
+                    }
+                    if(empty($errors)){
+                        $image = rand(0, 1000000) . '_' . $imageName ; 
+                        move_uploaded_file($imageTmp, "upload\images\\" . $image );
+                        $allImage .= $image.'/';
+                    }
+                    $ii++ ; 
+                }
+                if($ii <= 1){//just one photo for this product
+                    $allImage = $image;
                 }
 
+
                 if(empty($errors)){
-                    $image = rand(0, 1000000) . '_' . $imageName ; 
-                    move_uploaded_file($imageTmp, "upload\images\\" . $image ); 
+                   // tags work
+                    $t ='' ; 
+                    if($status == 1){
+                        $t .=  'New' ;
+                    }elseif($status == 2){
+                        $t .=  'LikeNew' ;
+                    }elseif($status == 3){
+                        $t .=  'Used' ;  
+                    }elseif($status == 4){
+                        $t .=  'Old' ;  
+                    }elseif($status == 5){
+                        $t .=  'VeryOld' ;
+                    }
+                    $arr = array("New", "LikeNew", "Old", "veryOld", "Used");
+                    $tags_arr = explode(', ', $tags);//all new tags value
+                    $ii = 0 ; 
+                    foreach($tags_arr as $i){
+                        if(in_array($i, $arr)){
+                            $tags_arr[$ii] = $t ;
+                        }
+                        $ii++ ; 
+                    }
+                    $tags = join(', ',$tags_arr) ; 
 
                     $stmt = $con -> prepare("UPDATE items SET item_name=?, image=?, item_desc=?, price=?, country=?, status=?, cat_id=?, member_id=?, item_tags=? WHERE item_id = ?") ; 
-                    $stmt -> execute(array($itemName, $image, $description, $price, $country, $status, $category, $member, $tags, $itemId)) ; 
+                    $stmt -> execute(array($itemName, $allImage, $description, $price, $country, $status, $category, $member, $tags, $itemId)) ; 
 
                     echo '<h2 class="h1">'.$stmt->rowCount().'</h2>' ; 
                 }else{
@@ -744,7 +818,7 @@
                     }
                     echo "</div>" ;
                     echo '<div class="text-center" style="margin-top:50px"><a class="btn btn-danger btn-lg" 
-                         style="" href="?do=Edit&item_id='.$itemId.'"><i class="fa fa-angle-double-left"></i> Backc</a></div>' ;
+                         style="" href="?do=Edit&item_id='.$itemId.'"><i class="fa fa-angle-double-left"></i>kc</a></div>' ;
                 }
 
             }else{

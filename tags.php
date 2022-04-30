@@ -61,7 +61,7 @@
 
 							echo '<h5 class="card-title"><a href="items.php?item_id=' . $item['item_id'] . '">' . $item['item_name'] . '</a></h5>' ; 
 
-							echo '<p class="card-text lead">' . $item['item_desc'] . '</p>' ;
+							echo '<p class="card-text text-truncate lead">' . $item['item_desc'] . '</p>' ;
 
 							echo '<div class="card-date">' . $item['add_date'] . '</div>' ;
 							

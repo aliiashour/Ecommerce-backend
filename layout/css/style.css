@@ -1,4 +1,4 @@
-/*  strat global*/
+ /* strat global*/
 *{
     margin: 0px ; 
     padding: 0px ; 
@@ -274,8 +274,22 @@ h2.h1{
     border-radius: 5px  
 }
 .pies ul li span{
-    display: inline-block;
-    width: 220px ; 
+    /* display: inline-block;
+    width: 220px ;  */
+    float: right;
+}
+.subcat a{
+    text-decoration: none;
+}
+.pies ul li .desc,
+.commenter .comment{
+    cursor: pointer;
+    
+}
+.pies ul li .tag{
+    /* display: inline-block;
+    width: 220px ;  */
+    float: left;
 }
 .pies ul li:nth-child(odd){
     background-color: #c7bcbc ; 
@@ -299,6 +313,14 @@ h2.h1{
     font-size: large;
     font-weight: 500;
     color: #655050;
+}
+.editform .form-group > div{
+    padding-right: 0px ;
+    padding-bottom: 2px ; 
+}
+.editform .form-group > div > input{
+    /* padding-right: 0px ; */
+    margin-right: -12px ;
 }
 .commenter .comment{
     background-color: #e6e6e6;
@@ -327,7 +349,6 @@ h2.h1{
 /* EDITING */
 .commenter .comment span, 
 .un{
-    float: right;
     display: inline-block;
     background-color: #333;
     padding: 0px 10px;
@@ -388,4 +409,4 @@ h2.h1{
 .container .collapse .navbar-nav .nav-item .nav-link.activeLink{
     color: rgb(189, 189, 230);
 }
-/*end of handle the sub categorey Nameing*/
+/*end of handle the sub categorey Nameing */

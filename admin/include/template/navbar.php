@@ -26,18 +26,25 @@
                 <li class="nav-item">
                     <a class="nav-link <?php if(getTitle() ==lang('LOGS')){ echo "activeLink"; } ?> " href="#"><?php echo lang('LOGS')?></a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <?php   echo lang('AdmainName')?>           
-                    </a>
-                    <div class="dropdown-menu <?php if(isset($ar)){echo 'rtl' ;}?>" aria-labelledby="navbarDropdown">
-                        <a href="../index.php" class="dropdown-item">Visit Shop</a>
-                        <a class="dropdown-item" href="members.php?do=Edit&adminId=<?php echo $_SESSION["adminId"]?>"><?php echo lang('EDITPROFILE')?> </a>
-                        <a class="dropdown-item" href="#"><?php echo lang('SETTINGS')?> </a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="logout.php"><?php echo lang('LOGOUT')?></a>
+                    <div class="dropdown <?php if(isset($ar)){echo 'rtl' ;}?>">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <?php   echo lang('AdmainName')?>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li>
+                                <a href="../index.php" class="dropdown-item">Visit Shop</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="members.php?do=Edit&adminId=<?php echo $_SESSION["adminId"] ;?>"><?php echo lang('EDITPROFILE')?></a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#"><?php echo lang('SETTINGS')?> </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="logout.php"><?php echo lang('LOGOUT')?></a>
+                            </li>
+                        </ul>
                     </div>
-                </li>
             </ul>
         </div>
     </div>

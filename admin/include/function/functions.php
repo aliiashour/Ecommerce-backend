@@ -48,6 +48,35 @@ function redirect($errMes, $errTime = 2, $page="Home", $url=null){
     ==============================================
 */
 
+function getParentCat($id){
+    global $con ; 
+    $stmt = $con->prepare("SELECT * FROM categores WHERE parent = 0 AND id = ? ORDER BY id ASC") ;
+    $stmt ->execute(array($id)) ;
+    $cats = $stmt->fetchAll() ; 
+    return $cats ; 
+}
+function getCats(){
+    global $con ; 
+    $stmt = $con->prepare("SELECT * FROM categores WHERE parent = 0 ORDER BY id ASC") ;
+    $stmt ->execute() ;
+    $cats = $stmt->fetchAll() ; 
+    return $cats ; 
+}
+function getSubCats(){
+    global $con ; 
+    $stmt = $con->prepare("SELECT * FROM categores WHERE parent != 0 ORDER BY id ASC") ;
+    $stmt ->execute() ;
+    $subcats = $stmt->fetchAll() ; 
+    return $subcats ; 
+}
+
+function getSubCatsOf($mainCatId){
+    global $con ; 
+    $stmt = $con->prepare("SELECT * FROM categores WHERE parent = ? ORDER BY id ASC") ;
+    $stmt ->execute(array($mainCatId)) ;
+    $subcats = $stmt->fetchAll() ; 
+    return $subcats ; 
+}
 function doQuery($queryType='x', $name='x', $email='x', $fullname='x', $pass='x', $userid=0, $image=''){
     
     global $con ;

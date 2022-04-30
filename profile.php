@@ -85,10 +85,9 @@
 				</ul>
 				<?php 
 					if(!isset($_GET["guest"]) && !isset($_GET["publisher"])){
-						echo '<span class="btn btn-warning btn-sm float-right">
-							<i class="fa fa-edit"></i>
-							<a href="members.php?do=Edit&adminId='.$_SESSION["uid"].'">Edit Profile</a>
-						</span>';
+						echo '<div class="row justify-content-end"><span class="col-sm-1 btn btn-warning btn-sm">
+							<a href="members.php?do=Edit&adminId='.$_SESSION["uid"].'"><i class="fa fa-edit"></i></a>
+						</span></div>';
 					}
 				?>
 			</div>
@@ -103,7 +102,7 @@
 				My Ads
 			</div>
 			<div class="panel-body">
-				<div class="row justify-content-left">
+				<div class="row">
 					<?php 
 				
 						// Get User Items With His Id From DAtbase
@@ -123,7 +122,13 @@
 						// Check If There Is Any Items
 
 						if(empty($items)){
-							echo '<div>There Is No Ads Yet' . '<a class="float-right btn btn-success btn-sm" href="newad.php"><i class="fa fa-plus"></i> Add Item</a></div>'; 
+							echo '<div class="col-sm-6">There Is No Ads Yet' ; 
+							echo '</div>'; 
+							echo '<div class="col-sm-6 text-end">' ; 
+								echo '<a class="btn btn-success btn-sm" href="newad.php"> ' ;
+									echo '<i class="fa fa-plus"></i>';
+								echo '</a>';
+							echo '</div>' ; 
 						}else{
 
 							// Show Data
@@ -154,7 +159,7 @@
 
 											echo '<h5 class="card-title"><a href="items.php?item_id=' . $item['item_id'] . '">' . $item['item_name'] . '</a></h5>' ; 
 
-											echo '<p class="card-text lead">' . $item['item_desc'] . '</p>' ;
+											echo '<p class="card-text text-truncate lead">' . $item['item_desc'] . '</p>' ;
 
 											echo '<div class="card-date">' . $item['add_date'] . '</div>' ;
 											
@@ -233,10 +238,17 @@
 					}else{
 
 						// Show Data
-
-						foreach ($comments as $com) {
-							echo $com["comment"] . '<br />'; 
+						echo '<ul class="list-unstyled">' ; 
+						foreach ($comments as $com) {?>
+							<li> 
+								<div class="row justify-content-center">
+										<div class="comm col-sm-12 d-inline-block <?php if(strlen($com["comment"]) > 200){ echo 'text-truncate' ; }?> desc">
+											<?php echo $com["comment"]  ;?>
+										</div>
+								</div>
+							</li> <?php
 						}
+						echo '</ul>' ;
 
 					}
 				?>

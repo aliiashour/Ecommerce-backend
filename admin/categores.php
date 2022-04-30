@@ -49,16 +49,16 @@
                                         echo '<div class="row">'; 
                                             echo '<div class="cat col-sm-12">';
                                                 echo '<div class="hidden-buttons">' ;
-                                                    echo '<a class="btn btn-warning btn-md" href="?do=Edit&catId='.$cat['id'].'"><i class="fa fa-edit"></i> Edit</a>' ;
-                                                    echo '<a class="btn btn-danger btn-md confirm" href="?do=Delete&catId='.$cat['id'].'"><i class="fa fa-times"></i> Delete</a>' ; 
+                                                    echo '<a class="btn btn-warning btn-md" href="?do=Edit&catId='.$cat['id'].'"><i class="fa fa-edit"></i></a>' ;
+                                                    echo '<a class="btn btn-danger btn-md confirm" href="?do=Delete&catId='.$cat['id'].'"><i class="fa fa-times"></i></a>' ; 
                                                 echo '</div>'  ; 
 
                                                 echo '<h4>'.$cat["name"].'</h4>' ;
-                                                echo '<div class="toggleView">' ; 
+                                                echo '<div class="toggleView hideDescribtion">' ; 
                                                     echo '<p>' ; if(empty($cat["description"])){ echo 'This Category Has No description' ;  }else{ echo $cat["description"]; } echo '</p>' ;
                                                     if($cat["visibilty"] == 1){echo '<a class="btn btn-warning btn-md" href="#"><i class="fa fa-edit"></i> Visible It</a>' ;}
-                                                    if($cat["allowComment"] == 1){echo '<a class="btn btn-info btn-md" href="#"><i class="fas fa-pencil-alt"></i> Make Comment</a>' ;}
-                                                    if($cat["allowAds"] == 1){echo '<a class="btn btn-success btn-md" href="#"><i class="fas fa-eye"></i> Show Ads</a>' ;}
+                                                    if($cat["allowComment"] == 1){echo '<a class="btn btn-info btn-md" href="#"><i class="fas fa-pencil-alt"></i></a>' ;}
+                                                    if($cat["allowAds"] == 1){echo '<a class="btn btn-success btn-md" href="#"><i class="fas fa-eye"></i></a>' ;}
                                                 echo '</div>' ; 
                                             echo '</div>' ;
                                         echo '</div>'; 
@@ -73,16 +73,16 @@
                                                 echo '<div class="row">';
                                                     echo '<div class="cat subcat col-sm-10 offset-sm-2">';
                                                     echo '<div class="hidden-buttons">' ;
-                                                        echo '<a class="btn btn-warning btn-md" href="?do=Edit&catId='.$subcat['id'].'"><i class="fa fa-edit"></i> Edit</a>' ;
-                                                        echo '<a class="btn btn-danger btn-md confirm" href="?do=Delete&catId='.$subcat['id'].'"><i class="fa fa-times"></i> Delete</a>' ; 
+                                                        echo '<a class="btn btn-warning btn-md" href="?do=Edit&catId='.$subcat['id'].'"><i class="fa fa-edit"></i></a>' ;
+                                                        echo '<a class="btn btn-danger btn-md confirm" href="?do=Delete&catId='.$subcat['id'].'"><i class="fa fa-times"></i></a>' ; 
                                                     echo '</div>'  ; 
 
                                                     echo '<h4>'.$subcat["name"].'</h4>' ;
-                                                    echo '<div class="toggleView">' ; 
-                                                        echo '<p>' ; if(empty($subcat["description"])){ echo 'This Category Has No description' ;  }else{ echo $subcat["description"]; } echo '</p>' ;
-                                                        if($subcat["visibilty"] == 1){echo '<a class="btn btn-warning btn-md" href="#"><i class="fa fa-edit"></i> Visible It</a>' ;}
-                                                        if($subcat["allowComment"] == 1){echo '<a class="btn btn-info btn-md" href="#"><i class="fas fa-pencil-alt"></i> Make Comment</a>' ;}
-                                                        if($subcat["allowAds"] == 1){echo '<a class="btn btn-success btn-md" href="#"><i class="fas fa-eye"></i> Show Ads</a>' ;}
+                                                    echo '<div class="toggleView hideDescribtion">' ; 
+                                                        echo '<p">' ; if(empty($subcat["description"])){ echo 'This Category Has No description' ;  }else{ echo $subcat["description"]; } echo '</p>' ;
+                                                        if($subcat["visibilty"] == 1){echo '<a class="btn btn-warning btn-md" href="#"><i class="fa fa-edit"></i></a>' ;}
+                                                        if($subcat["allowComment"] == 1){echo '<a class="btn btn-info btn-md" href="#"><i class="fas fa-pencil-alt"></i></a>' ;}
+                                                        if($subcat["allowAds"] == 1){echo '<a class="btn btn-success btn-md" href="#"><i class="fas fa-eye"></i></a>' ;}
                                                     echo '</div>' ; 
                                                     echo '</div>' ;
                                                 echo '</div>';
@@ -110,7 +110,6 @@
                         <div class="float-right">
                             <a class='btn btn-primary btn-lg' style='margin-bottom:20px' href='?do=Add'>
                                 <i class='fa fa-plus'></i> 
-                                Add category
                             </a>
                         </div>
                     </div>
@@ -226,7 +225,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                          <input type="submit" class="btn btn-success float-right btn-lg" value="Add Category"> 
+                          <input type="submit" class="btn btn-success float-right btn-lg" value="Add"> 
                         </div>
                     </div>
                 </form>
@@ -394,7 +393,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-12">
-                              <input type="submit" class="btn btn-danger float-right btn-lg" value="Update Category"> 
+                              <input type="submit" class="btn btn-danger float-right btn-lg" value="Update"> 
                             </div>
                         </div>
                     </form>

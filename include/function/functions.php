@@ -24,6 +24,13 @@ function notActive($user){
     ==============================================
 */
 
+function getParentCat($id){
+    global $con ; 
+    $stmt = $con->prepare("SELECT * FROM categores WHERE parent = 0 AND id = ? ORDER BY id ASC") ;
+    $stmt ->execute(array($id)) ;
+    $cats = $stmt->fetchAll() ; 
+    return $cats ; 
+}
 function getCats(){
     global $con ; 
     $stmt = $con->prepare("SELECT * FROM categores WHERE parent = 0 ORDER BY id ASC") ;
@@ -39,6 +46,13 @@ function getSubCats(){
     return $subcats ; 
 }
 
+function getSubCatsOf($mainCatId){
+    global $con ; 
+    $stmt = $con->prepare("SELECT * FROM categores WHERE parent = ? ORDER BY id ASC") ;
+    $stmt ->execute(array($mainCatId)) ;
+    $subcats = $stmt->fetchAll() ; 
+    return $subcats ; 
+}
 /*
     ==============================================
     == This function Get Items From End From Database
