@@ -46,8 +46,9 @@ if(isset($_SESSION["adminId"])){
                         <tr>
                             <!-- <th scope="col">#ID</th>
                             <th scope="col">comment</th> -->
-                            <th scope="col">Item Name</th>
                             <th scope="col">User Name</th>
+                            <th scope="col">Item Name</th>
+                            <th scope="col">Comment</th>
                             <th scope="col">Date</th>
                             <th scope="col"class="text-center">Controle</th>
                         </tr>
@@ -64,6 +65,12 @@ if(isset($_SESSION["adminId"])){
 
                         <tr>
                             <!-- <a href="../items.php?item_id='.$row["item_id"].'"> -->
+                            
+                            <td>
+                                <a href="../profile.php<?php echo $q ; ?>">
+                                    <?php echo $row["userName"] ;?>
+                                </a>
+                            </td>
                             <td><a href="../items.php?item_id=<?php echo $row["item_id"] ; ?>"><?php echo $row["item_name"] ; ?></a></td>
                             <?php
                             
@@ -75,9 +82,7 @@ if(isset($_SESSION["adminId"])){
                                 }
                             ?>
                             <td>
-                                <a href="../profile.php<?php echo $q ; ?>">
-                                    <?php echo $row["userName"] ;?>
-                                </a>
+                                <div class="ellipsis text-truncate"><?php echo $row["comment"]; ?></div>
                             </td>
                             <td><?php echo $row["c_date"] ;?></td>
                             <td><a class="btn btn-warning btn-md"href="?do=Edit&comId=<?php echo $row["c_id"] ;  ?>"><i class="fa fa-edit fw"></i></a>

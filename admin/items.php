@@ -751,7 +751,6 @@
                 }
                 $image='' ; 
                 $allImage='' ; 
-                $ii= 0 ;
                 foreach($_FILES["image"]["tmp_name"] as $key => $value){
                     $imageName = $_FILES["image"]["name"][$key] ;
                     $imageTmp  = $_FILES["image"]["tmp_name"][$key] ;
@@ -775,11 +774,8 @@
                         move_uploaded_file($imageTmp, "upload\images\\" . $image );
                         $allImage .= $image.'/';
                     }
-                    $ii++ ; 
                 }
-                if($ii <= 1){//just one photo for this product
-                    $allImage = $image;
-                }
+                $allImage = $image;
 
 
                 if(empty($errors)){

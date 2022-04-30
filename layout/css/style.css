@@ -410,3 +410,13 @@ h2.h1{
     color: rgb(189, 189, 230);
 }
 /*end of handle the sub categorey Nameing */
+.break-word{
+    word-break: break-all;
+}
+
+.avatar{
+    width: 45px;
+    height: 45px;
+    margin-right: 2px;
+    margin-top: -6px;
+}

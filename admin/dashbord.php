@@ -114,7 +114,7 @@ if(isset($_SESSION["adminId"])){
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <i class="fa fa-tag"></i> Latest <?php echo $Lastusers?> Comments
@@ -131,7 +131,7 @@ if(isset($_SESSION["adminId"])){
                                     foreach($data3 as $com){ 
                             ?>
 
-                                        <li><?php echo $com["userName"] ; echo ': <span>' . $com["comment"] . '</span>' ; ?>
+                                        <li style="border-bottom:2px solid black;"><?php echo '<span class="d-inline-block">'.$com["userName"].'</span> :' ; ?><span class="comment <?php if(strlen($com["comment"]) > 30){ echo 'text-truncate' ;} ?> "><?php  echo $com["comment"] ; ?></span>
                                         <a class="btn btn-warning btn-md float-right" href="comments.php?do=Edit&comId=<?php echo $com["c_id"]?>"><i class="fa fa-edit"></i></a>
                                         <?php  if($com["c_status"] == 0){ ?>
 

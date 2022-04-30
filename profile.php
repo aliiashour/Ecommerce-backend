@@ -184,6 +184,13 @@
 								}
 							}
 							echo '</div>';
+							echo '<div class="row justify-content-end">';
+								echo '<div class="col-sm-2 text-end" >' ;
+									echo '<a class="col-sm-12 btn btn-success btn-lg" href="items.php?do=Manage">' ;
+										echo 'Manage';
+									echo '</a>' ; 
+								echo '</div>';
+							echo '</div>';
 
 						}
 					?>
@@ -218,40 +225,42 @@
 
 <div class="prov-items block">
 	<div class="container">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				My Comments
-			</div>
-			<div class="panel-body">
-				<?php 
-			
-					// Get User Comments With His Id From Database
+		<div class="col-sm-12">
+			<div class="panel panel-default col-sm-12">
+				<div class="panel-heading col-sm-12">
+					My Comments
+				</div>
+				<div class="panel-body col-sm-12">
+					<?php 
+				
+						// Get User Comments With His Id From Database
 
-					$stmt = $con->prepare("SELECT * FROM comments WHERE user_id = ?");
-					$stmt -> execute(array($info['userId'])) ;   
-					$comments = $stmt -> fetchAll() ; 
+						$stmt = $con->prepare("SELECT * FROM comments WHERE user_id = ?");
+						$stmt -> execute(array($info['userId'])) ;   
+						$comments = $stmt -> fetchAll() ; 
 
-					// Check If There Is Any Items
+						// Check If There Is Any Items
 
-					if(empty($comments)){
-						echo 'There Is No comments Yet' ;
-					}else{
+						if(empty($comments)){
+							echo 'There Is No comments Yet' ;
+						}else{
 
-						// Show Data
-						echo '<ul class="list-unstyled">' ; 
-						foreach ($comments as $com) {?>
-							<li> 
-								<div class="row justify-content-center">
-										<div class="comm col-sm-12 d-inline-block <?php if(strlen($com["comment"]) > 200){ echo 'text-truncate' ; }?> desc">
-											<?php echo $com["comment"]  ;?>
-										</div>
-								</div>
-							</li> <?php
+							// Show Data
+							echo '<ul class="list-unstyled">' ; 
+							foreach ($comments as $com) {?>
+								<li style="margin-bottom:2px" > 
+									<div class="row justify-content-center">
+											<div class="comm col-sm-12 bg-light d-inline-block <?php if(strlen($com["comment"]) >30){ echo 'text-truncate' ; }?>">
+												<?php echo $com["comment"]  ;?>
+											</div>
+									</div>
+								</li> 
+								<?php }
+							echo '</ul>' ;
+
 						}
-						echo '</ul>' ;
-
-					}
-				?>
+					?>
+				</div>
 			</div>
 		</div>
 	</div>
