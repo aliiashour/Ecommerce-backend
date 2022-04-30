@@ -47,10 +47,12 @@ $(document).ready(function(){
 
     $(".pies ul li .text-truncate, .comment .text-truncate").on("click",function(){
         $(this).toggleClass("text-truncate") ; 
+        $(this).toggleClass("break-word") ; 
         // $(this).text($(this).val()) ; 
     });
     $(".prov-items .comm").on("click",function(){
         $(this).toggleClass("text-truncate") ; 
+        $(this).toggleClass("break-word") ; 
         // $(this).text($(this).val()) ; 
     });
     

@@ -103,7 +103,7 @@
                                             Sub Cactegores
                                                 </button>' ;
                                         
-                                        echo '  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">' ;
+                                        echo '  <ul style="max-length:200px;" class="dropdown-menu" aria-labelledby="dropdownMenuButton1">' ;
                                             
                                             foreach ($cats as $cat) {
                                                 echo '<strong>'.$cat["name"]. ':</strong>'; 

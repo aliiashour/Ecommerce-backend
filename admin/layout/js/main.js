@@ -44,4 +44,9 @@ $(document).ready(function(){
     var myCarousel = document.querySelector('#myCarousel')
     var carousel = new bootstrap.Carousel(myCarousel)
 
+    $(".comment").on("click",function(){
+        $(this).toggleClass("text-truncate") ; 
+        $(this).toggleClass("break-word") ; 
+        // $(this).text($(this).val()) ; 
+    });
 });
