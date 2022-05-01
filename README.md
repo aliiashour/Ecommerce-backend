@@ -4,7 +4,8 @@ An educational project for me, to learn building PHP websites
 ## Table of Contents
 1. [General Info](#general-info)
 2. [Technologies](#technologies)
-3. [Installation](#installation)
+3. [Current Features](#current-features)
+4. [Installation](#installation)
 
 ## General Info
 a NATIVE-PHP back-end website for showing Products you want to sell or buy
@@ -17,6 +18,21 @@ A list of technologies used within the project:
 * [bootstrap](https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css): Version 5.1.3 
 * [jQuery](https://code.jquery.com/jquery-3.5.1.min.js): Version 3.5.1
 
+##  Current Features
+* Support two language 
+```
+[English-ARABIC]
+```
+* Admin full controle
+* interactive dashboard for Admin user
+* Full controle to user product
+```
+[ADD-EDIT-DELETE]
+```
+* Uploading multi-photos for same product
+* User session end automatically
+* Create subcategory form main one
+* Pagination bar
 ## Installation
 To run this project in your local machine, watch this short youtube video first
 * [download XAMPP](https://youtu.be/6rAA3FDYh6I) 
