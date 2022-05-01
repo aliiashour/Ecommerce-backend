@@ -23,9 +23,15 @@ function lang($phase){
         'LOGS'          => 'Logs',
 //        'AdmainName'    => $_SESSION["admin"],
         'AdmainName'    => 'Ali',
+        'VISITSHOP'     => 'Visit Shop',
         'EDITPROFILE'   => 'Edit Profile',
         'SETTINGS'      => 'Settings',
         'LOGOUT'        => 'Logout',
+        'DASHBOARD'     => 'dashboard' ,
+        'TOTALCOMMENTS' => 'Total Comments' ,
+        'TOTALITEMS'    => 'Total Items',
+        'TOTALMEMBERS'  => 'Total Members',
+        'PENDINGMEMBERS'=> 'Pending Members',
         // Manage Member Page
         'MANAGE'        => 'Manage Members',
         // Add Member Page

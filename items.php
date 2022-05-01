@@ -406,7 +406,7 @@
             $start_from = ( $page - 1 ) * $item_count ; 
     
             
-            echo '<h2 class="h1 text-center">Mange Items</h2>' ;  
+            echo '<h2 class="h1 text-center">Mange My Items</h2>' ;  
             $stmt = $con->prepare("SELECT 
                                         items.*, categores.name As category 
                                     FROM 

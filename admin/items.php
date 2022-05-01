@@ -13,7 +13,7 @@
 
         if($do =="Mange"){
 
-            $item_count = 5 ; 
+            $item_count = 3 ; 
             $page = '';
             if(isset($_GET["page"])){
                 $page = $_GET["page"] ; 
@@ -385,9 +385,8 @@
                             $allImage .= $image.'/';
                         }
                     }
-            
+                    $allImage = substr($allImage,0,strlen($allImage)-1) ; 
                     if(empty($errors)){
-                        $allImage = substr($allImage,0,strlen($allImage)-1) ; 
                         $stmt = $con->prepare("INSERT INTO items(item_name, item_desc, price, country, status, add_date, cat_id, member_id, item_tags, image) 
                                             VALUES(:zx, :zxx, :zxxx, :zxxxx, :zxxxxx, now(), :zxxxxxx, :zxxxxxxx, :zxxxxxxxx, :zxxxxxxxxx)") ; 
 
@@ -775,7 +774,7 @@
                         $allImage .= $image.'/';
                     }
                 }
-                $allImage = $image;
+                $allImage = substr($allImage,0,strlen($allImage)-1) ; 
 
 
                 if(empty($errors)){

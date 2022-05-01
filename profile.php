@@ -11,7 +11,7 @@
 	
 	include 'init.php' ; 
 	
-	$item_count = 10; 
+	$item_count = 3; 
 	$page = '';
 	if(isset($_GET["page"])){
 		$page = $_GET["page"] ; 

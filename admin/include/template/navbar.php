@@ -32,7 +32,7 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li>
-                                <a href="../index.php" class="dropdown-item">Visit Shop</a>
+                                <a href="../index.php" class="dropdown-item"><?php echo lang('VISITSHOP')?></a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="members.php?do=Edit&adminId=<?php echo $_SESSION["adminId"] ;?>"><?php echo lang('EDITPROFILE')?></a>

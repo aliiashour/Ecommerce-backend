@@ -16,7 +16,7 @@ if(isset($_SESSION["user"])) {
     if(!isset($_SESSION["admin"])){
 
         if(isset($_SESSION["LAST_ACTIVE_TIME"])){
-            if(time()-$_SESSION["LAST_ACTIVE_TIME"] >900){
+            if(time()-$_SESSION["LAST_ACTIVE_TIME"] >5){
                 header("location:logout.php") ;
             }
         }

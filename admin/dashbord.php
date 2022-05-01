@@ -1,6 +1,7 @@
 <?php 
 ob_start("ob_gzhandler") ; 
 session_start() ;
+// $ar=''  ;
 if(isset($_SESSION["adminId"])){
     $pageTitle = "Dashboard" ;
     include "init.php" ; 
@@ -11,14 +12,14 @@ if(isset($_SESSION["adminId"])){
 
 <div class="home-stats">
     <div class="container text-center">
-        <h2 class="h1">Dashboard</h2>
+        <h2 class="h1"><?php echo lang('DASHBOARD')?></h2>
         <div class="row">
             <div class="col-md-3">
                 
                 <div class="stat members">
                     <i class="fas fa-users fw fa-3x mb-2"></i>
                     <div>
-                        Total Members
+                    <?php echo lang('TOTALMEMBERS')?>
                         <span><a href="members.php?do=Mange"><?php echo getCount("userId", "users")?></a></span>
                     </div>
                 </div>
@@ -27,7 +28,7 @@ if(isset($_SESSION["adminId"])){
                 <div class="stat pending">
                     <i class="fas fa-users-slash fw fa-3x mb-2"></i>
                     <div>
-                        Pending Members
+                    <?php echo lang('PENDINGMEMBERS')?>
                         <span><a href="members.php?do=Pending"><?php echo getPendingCount("users")?></a></span>
                     </div>
                 </div>
@@ -36,7 +37,7 @@ if(isset($_SESSION["adminId"])){
                 <div class="stat items">
                     <i class="fas fa-sitemap fw fa-3x mb-2"></i>
                     <div>
-                        Total Items
+                        <?php echo lang('TOTALITEMS')?>  
                         <span><a href="items.php?do=Mange"><?php echo getCount("item_id", "items") ; ?></a></span>
                     </div>
                 </div>
@@ -45,7 +46,7 @@ if(isset($_SESSION["adminId"])){
                 <div class="stat comments">
                     <i class="fas fa-comments fw fa-3x mb-2"></i>
                     <div>
-                        Total Comments
+                        <?php echo lang('TOTALCOMMENTS')?>  
                         <span><a href="comments.php?do=Mange"><?php echo getCount("c_id", "comments") ; ?></a></span>
                     </div>
                 </div>
