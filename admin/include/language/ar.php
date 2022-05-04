@@ -20,7 +20,7 @@ function lang($phase){
         'STATISTICS'    => 'الاحصائيات',
         'COMMENTS'      => 'التعليقات',
         'LOGS'          => 'المدونة',
-        'AdmainName'    => 'علي',
+        'Admin'         => 'ادمن',
         'VISITSHOP'     => 'زيارة الموقع' ,
         'EDITPROFILE'   => 'تعديل اللف الشخصي',
         'SETTINGS'      => 'الاعدادات',

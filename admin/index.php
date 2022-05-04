@@ -3,7 +3,7 @@
 session_start() ; 
 $nonav = '' ;
 $pageTitle = "Login" ;
-$ar='yes' ;
+//$ar='yes' ;
 if(isset($_SESSION["admin"])){
     header("location:dashbord.php") ;
 }

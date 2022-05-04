@@ -41,12 +41,26 @@
 
 ?>
 
-<h2 class="h1 text-center">My Profile</h2>
+<h2 class="h1 text-center">
+	<?php 
+		if(!isset($_GET["guest"]) && !isset($_GET["publisher"])){
+			echo 'My Profile' ; 
+		}else{
+			echo  ucfirst($_GET["publisher"]) .' Profile' ; 
+		}
+	?>
+</h2>
 <div class="my-info block">
 	<div class="container">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				My Mainly Information
+				<?php 
+					if(!isset($_GET["guest"]) && !isset($_GET["publisher"])){
+						echo 'My Information' ; 
+					}else{
+						echo  ucfirst($_GET["publisher"]) .' Information' ; 
+					}
+				?>
 			</div>
 			<div class="panel-body">
 				<ul class="list-unstyled" style="margin-bottom: 0px">
@@ -99,7 +113,13 @@
 	<div class="container">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				My Ads
+				<?php 
+					if(!isset($_GET["guest"]) && !isset($_GET["publisher"])){
+						echo 'My Ads' ; 
+					}else{
+						echo  ucfirst($_GET["publisher"]) .' Ads' ; 
+					}
+				?>
 			</div>
 			<div class="panel-body">
 				<div class="row">
@@ -184,13 +204,15 @@
 								}
 							}
 							echo '</div>';
-							echo '<div class="row justify-content-end">';
-								echo '<div class="col-sm-2 text-end" >' ;
-									echo '<a class="col-sm-12 btn btn-success btn-lg" href="items.php?do=Manage">' ;
-										echo 'Manage';
-									echo '</a>' ; 
+							if(!isset($_GET["guest"]) && !isset($_GET["publisher"])){
+								echo '<div class="row justify-content-end">';
+									echo '<div class="col-sm-2 text-end" >' ;
+										echo '<a class="col-sm-12 btn btn-success btn-lg" href="items.php?do=Manage">' ;
+											echo 'Manage';
+										echo '</a>' ; 
+									echo '</div>';
 								echo '</div>';
-							echo '</div>';
+							}
 
 						}
 					?>
@@ -228,38 +250,48 @@
 		<div class="col-sm-12">
 			<div class="panel panel-default col-sm-12">
 				<div class="panel-heading col-sm-12">
-					My Comments
-				</div>
-				<div class="panel-body col-sm-12">
 					<?php 
-				
-						// Get User Comments With His Id From Database
-
-						$stmt = $con->prepare("SELECT * FROM comments WHERE user_id = ?");
-						$stmt -> execute(array($info['userId'])) ;   
-						$comments = $stmt -> fetchAll() ; 
-
-						// Check If There Is Any Items
-
-						if(empty($comments)){
-							echo 'There Is No comments Yet' ;
+						if(!isset($_GET["guest"]) && !isset($_GET["publisher"])){
+							echo 'My Comments' ; 
 						}else{
-
-							// Show Data
-							echo '<ul class="list-unstyled">' ; 
-							foreach ($comments as $com) {?>
-								<li style="margin-bottom:2px" > 
-									<div class="row justify-content-center">
-											<div class="comm col-sm-12 bg-light d-inline-block <?php if(strlen($com["comment"]) >30){ echo 'text-truncate' ; }?>">
-												<?php echo $com["comment"]  ;?>
-											</div>
-									</div>
-								</li> 
-								<?php }
-							echo '</ul>' ;
-
+							echo  ucfirst($_GET["publisher"]) .' Comments' ; 
 						}
 					?>
+				</div>
+				<div class="panel-body col-sm-12">
+					<div class="row">	
+						<div class="col-sm-12">
+							<?php 
+						
+								// Get User Comments With His Id From Database
+
+								$stmt = $con->prepare("SELECT * FROM comments WHERE user_id = ?");
+								$stmt -> execute(array($info['userId'])) ;   
+								$comments = $stmt -> fetchAll() ; 
+
+								// Check If There Is Any Items
+
+								if(empty($comments)){
+									echo 'There Is No comments Yet' ;
+								}else{
+
+									// Show Data
+									echo '<ul class="list-unstyled">' ; 
+									foreach ($comments as $com) {?>
+										<li style="margin-bottom:2px" > 
+											<div class="row justify-content-center">
+													<div class="comm col-sm-12 d-inline-block <?php if(strlen($com["comment"]) >30){ echo 'text-truncate' ; }?>">
+														<?php echo '<i class="fas fa-comments"></i> '.$com["comment"]  ;?>
+													</div>
+											</div>
+										</li> 
+										<?php }
+									echo '</ul>' ;
+
+								}
+							?>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

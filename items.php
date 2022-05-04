@@ -670,7 +670,7 @@
                             <div class="form-group row">
                                 <label for="inputUsername" class="col-sm-2 col-form-label"><strong>Item Status</strong></label>
                                 <div class="col-sm-10">
-                                    <select name="status" class="form-control offset-sm-2 col-sm-10">
+                                    <select name="status" class="form-control col-sm-10">
                                         <option value="1" <?php if($item["status"] == 1 ){ echo "selected" ; } ?>>New</option>
                                         <option value="2" <?php if($item["status"] == 2 ){ echo "selected" ; } ?>>Like New</option>
                                         <option value="3" <?php if($item["status"] == 3 ){ echo "selected" ; } ?>>Used</option>
@@ -694,7 +694,7 @@
                             <div class="form-group row">
                                 <label for="inputUsername" class="col-sm-2 col-form-label"><strong>Category</strong></label>
                                 <div class="col-sm-10">
-                                    <select name="category" class="form-control offset-sm-2 col-sm-10">
+                                    <select name="category" class="form-control col-sm-10">
 										<?php
 											
 										$stmt = $con->prepare("SELECT * FROM categores Where visibilty=0 AND parent=0") ;
@@ -717,9 +717,9 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <div class="col-sm-12">
-                                    <input type="submit" class="btn btn-danger float-right btn-md" value="Update"> 
+                            <div class="form-group row justify-content-end">
+                                <div class="col-sm-10">
+                                    <input type="submit" class="col-sm-2 btn btn-danger float-end btn-md" value="Update"> 
                                 </div>
                             </div>
                         </form>

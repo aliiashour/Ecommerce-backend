@@ -66,12 +66,6 @@ if(isset($_SESSION["adminId"])){
                         <tr>
                             <!-- <a href="../items.php?item_id='.$row["item_id"].'"> -->
                             
-                            <td>
-                                <a href="../profile.php<?php echo $q ; ?>">
-                                    <?php echo $row["userName"] ;?>
-                                </a>
-                            </td>
-                            <td><a href="../items.php?item_id=<?php echo $row["item_id"] ; ?>"><?php echo $row["item_name"] ; ?></a></td>
                             <?php
                             
                                 $q = '' ; 
@@ -82,6 +76,12 @@ if(isset($_SESSION["adminId"])){
                                 }
                             ?>
                             <td>
+                                <a href="../profile.php<?php echo $q ; ?>">
+                                    <?php echo $row["userName"] ;?>
+                                </a>
+                            </td>
+                            <td><a href="../items.php?item_id=<?php echo $row["item_id"] ; ?>"><?php echo $row["item_name"] ; ?></a></td>
+                            <td>
                                 <div class="ellipsis text-truncate"><?php echo $row["comment"]; ?></div>
                             </td>
                             <td><?php echo $row["c_date"] ;?></td>
@@ -89,7 +89,7 @@ if(isset($_SESSION["adminId"])){
                             <a class="btn btn-danger btn-md confirm" href="?do=Delete&comId=<?php echo $row["c_id"] ;  ?>"><i class="fa fa-times fw confirm"></i></a>
                             <?php
                                 if($row["c_status"] == 0 ){?>
-                                    <a class="btn btn-info btn-md confirm" href="?do=Approve&comId=<?php echo $row["c_id"] ;  ?>&b=?do=Mange"><i class="fa fa-check fw conform"></i></a>
+                                    <a class="btn btn-info btn-md confirm" href="?do=Approve&comId=<?php echo $row["c_id"] ;  ?>&b=?do=Mange"><i class="fa fa-check fw"></i></a>
                                 <?php }?>
                             </td>
                         </tr>

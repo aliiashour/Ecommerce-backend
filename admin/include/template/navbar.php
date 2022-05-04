@@ -28,7 +28,7 @@
                 </li>
                     <div class="dropdown <?php if(isset($ar)){echo 'rtl' ;}?>">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <?php   echo lang('AdmainName')?>
+                            <?php   echo lang('Admin')?>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li>

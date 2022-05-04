@@ -22,7 +22,7 @@ function lang($phase){
         'STATISTICS'    => 'Statistics',
         'LOGS'          => 'Logs',
 //        'AdmainName'    => $_SESSION["admin"],
-        'AdmainName'    => 'Ali',
+        'Admin'         => 'admin',
         'VISITSHOP'     => 'Visit Shop',
         'EDITPROFILE'   => 'Edit Profile',
         'SETTINGS'      => 'Settings',
