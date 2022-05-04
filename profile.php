@@ -184,13 +184,15 @@
 								}
 							}
 							echo '</div>';
-							echo '<div class="row justify-content-end">';
-								echo '<div class="col-sm-2 text-end" >' ;
-									echo '<a class="col-sm-12 btn btn-success btn-lg" href="items.php?do=Manage">' ;
-										echo 'Manage';
-									echo '</a>' ; 
+							if(!isset($_GET["guest"]) && !isset($_GET["publisher"])){
+								echo '<div class="row justify-content-end">';
+									echo '<div class="col-sm-2 text-end" >' ;
+										echo '<a class="col-sm-12 btn btn-success btn-lg" href="items.php?do=Manage">' ;
+											echo 'Manage';
+										echo '</a>' ; 
+									echo '</div>';
 								echo '</div>';
-							echo '</div>';
+							}
 
 						}
 					?>
