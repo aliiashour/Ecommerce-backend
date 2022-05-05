@@ -9,6 +9,8 @@ An educational project for me, to learn building PHP websites
 
 ## General Info
 a NATIVE-PHP back-end website for showing Products you want to sell or buy
+#### for live demo
+http://9mkpx6nu.epizy.com/
 ```
 for more information see the screenshots folder
 ```
