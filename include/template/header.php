@@ -13,7 +13,8 @@
         
         <link rel="stylesheet" href="<?php echo $css ?>all.min.css">
         <link rel="stylesheet" href="<?php echo $css ?>fontawesome.min.css">
-        <link rel="stylesheet" href="<?php echo $css ?>bootstrap.min.css">
+        <link rel="stylesheet" href="<?php echo $css ?>bootstrap4.min.css">
+        <link rel="stylesheet" href="<?php echo $css ?>bootstrap5.min.css">
         <link rel="stylesheet" href="<?php echo $css ?>style.css">
     </head>
     <body 
@@ -25,12 +26,12 @@
         <div class="upper-nav">
             <div class="container">
                 <div class="row">
-                    <div class="info col-sm-6 text-left">
+                    <div class="info col-sm-4 text-left">
                         <?php echo date('M / d / Y'); ?>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-8">
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <?php if(isset($_SESSION["user"])){ ?>
                                     <ul class="list-unstyled list float-left">
                                         <li class="list-item"><a href="newad.php">NewAdd</a></li>
@@ -39,7 +40,7 @@
                                 <?php } ?>
 
                             </div>   
-                            <div class="col-sm-6 pan">
+                            <div class="col-sm-8 pan text-sm-start text-md-end">
                                 <?php 
                                     if(isset($_SESSION["user"])){
                                         $stmt = $con->prepare("SELECT * FROM users WHERE userName = ?") ;

@@ -222,7 +222,7 @@ if(isset($_SESSION["user"])){
 							<div class="form-group row">
 							    <label for="inputUsername" class="col-sm-2 col-form-label"><strong>Item Status</strong></label>
 							    <div class="col-sm-10">
-							        <select name="status" class="form-control col-sm-10">
+							        <select name="status" class="form-control col-sm-10 offset-sm-2">
 							            <option value="0">...</option>
 							            <option value="1">New</option>
 							            <option value="2">Like New</option>
@@ -246,7 +246,7 @@ if(isset($_SESSION["user"])){
 							<div class="form-group row">
 							    <label for="inputUsername" class="col-sm-2 col-form-label"><strong>Category</strong></label>
 							    <div class="col-sm-10">
-							        <select name="category" class="form-control col-sm-10">
+							        <select name="category" class="form-control col-sm-10 offset-sm-2">
 							            <option value="0">...</option>
 										<?php
 											
